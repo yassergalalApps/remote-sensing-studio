@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/plugins/remote_sensing_studio">
+        <file>icons/plugin_icon.png</file>
+        <file>icons/leaf.svg</file>
+        <file>icons/water.svg</file>
+        <file>icons/city.svg</file>
+        <file>icons/environment.svg</file>
+    </qresource>
+</RCC>

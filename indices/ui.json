@@ -1,0 +1,83 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "UI",
+    "metadata": {
+        "display_name": "Urban Index",
+        "scientific_name": "UI",
+        "category": "urban",
+        "description": "Uses long-wave infrared reflectance to identify dense urban environments and correlate with built-up impervious area intensity.",
+        "units": "Index",
+        "order": 3,
+        "scientific_reference": "Kawamura, M., Jayamana, S., & Tsujiko, Y. (1996). Relation between LANDSAT TM data and population density. Journal of the Japan Society of Photogrammetry and Remote Sensing, 35(2), 4-10."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "(SWIR2 - NIR) / (SWIR2 + NIR)",
+        "required_bands": [
+            "SWIR2",
+            "NIR"
+        ],
+        "parameters": {},
+        "reference": "Kawamura, M., Jayamana, S., & Tsujiko, Y. (1996). Relation between LANDSAT TM data and population density. Journal of the Japan Society of Photogrammetry and Remote Sensing, 35(2), 4-10."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Urban",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "urban"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Urban Fabric",
+        "negative_class": "Non-Urban Fabric"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_ui",
+                "expression": "SWIR2 + NIR",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

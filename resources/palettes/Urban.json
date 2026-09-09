@@ -1,0 +1,14 @@
+{
+    "name": "Urban",
+    "description": "Neutral urban density color ramp (White to Dark Gray)",
+    "recommended_index": "NDBI",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.0,
+    "color_stops": [
+        {"value": -1.0, "color": "#FFFFFF"},
+        {"value": -0.5, "color": "#FFFDE7"},
+        {"value": 0.0, "color": "#FFD54F"},
+        {"value": 0.5, "color": "#8D6E63"},
+        {"value": 1.0, "color": "#37474F"}
+    ]
+}

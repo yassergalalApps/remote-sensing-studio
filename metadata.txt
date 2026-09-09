@@ -1,0 +1,16 @@
+[general]
+name=Remote Sensing Studio
+qgisMinimumVersion=4.0
+qgisMaximumVersion=4.99
+description=A professional plugin for remote sensing analysis supporting GEE, indices calculation, QA, and reporting.
+about=This plugin provides enterprise-level tools for remote sensing tasks including Landsat, Sentinel-2, MODIS data analysis, composite methods, and cloud filtering.
+version=1.0.0
+author=Yasser Galal
+email=yassergalalApps@users.noreply.github.com
+homepage=https://github.com/yassergalalApps/remote-sensing-studio#readme
+tracker=https://github.com/yassergalalApps/remote-sensing-studio/issues
+repository=https://github.com/yassergalalApps/remote-sensing-studio
+category=Raster
+tags=remote sensing, GEE, indices, landsat, sentinel, modis
+hasProcessingProvider=False
+license=GNU General Public License v2.0 or later (GPLv2+)

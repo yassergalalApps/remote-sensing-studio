@@ -1,0 +1,85 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "BSI",
+    "metadata": {
+        "display_name": "Bare Soil Index",
+        "scientific_name": "BSI",
+        "category": "bare_soil",
+        "description": "Separates bare soil and clear uncultivated areas from vegetated terrain and water features by leveraging shortwave infrared and blue spectral signatures.",
+        "units": "Index",
+        "order": 4,
+        "scientific_reference": "Rikimaru, A., Royer, R., & Miyatake, S. (2002). Tropical forest cover density mapping. Forest Ecology and Management, 174(1-3), 39-47."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "((SWIR1 + RED) - (NIR + BLUE)) / ((SWIR1 + RED) + (NIR + BLUE))",
+        "required_bands": [
+            "BLUE",
+            "RED",
+            "NIR",
+            "SWIR1"
+        ],
+        "parameters": {},
+        "reference": "Rikimaru, A., Royer, R., & Miyatake, S. (2002). Tropical forest cover density mapping. Forest Ecology and Management, 174(1-3), 39-47."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Bare Soil",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "bare_soil"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Bare Soil",
+        "negative_class": "Vegetated / Covered Surface"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_bsi",
+                "expression": "(SWIR1 + RED) + (NIR + BLUE)",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

@@ -1,0 +1,81 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "LSWI",
+    "metadata": {
+        "display_name": "Land Surface Water Index",
+        "scientific_name": "LSWI",
+        "category": "Spectral Index",
+        "description": "Land Surface Water Index",
+        "units": "Index",
+        "order": 6
+    },
+    "workspace": "water",
+    "formula": {
+        "engine": "expression",
+        "expression": "(NIR - SWIR1) / (NIR + SWIR1)",
+        "required_bands": [
+            "NIR",
+            "SWIR1"
+        ],
+        "parameters": {}
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Moisture",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "moisture"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Water",
+        "negative_class": "Non-Water"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_lswi",
+                "expression": "NIR + SWIR1",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

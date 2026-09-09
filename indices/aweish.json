@@ -1,0 +1,78 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "AWEIsh",
+    "metadata": {
+        "display_name": "Automated Water Extraction Index (Shadow)",
+        "scientific_name": "AWEIsh",
+        "category": "Spectral Index",
+        "description": "Automated Water Extraction Index (Shadow version)",
+        "units": "Index",
+        "order": 3
+    },
+    "workspace": "water",
+    "formula": {
+        "engine": "expression",
+        "expression": "BLUE + 2.5 * GREEN - 1.5 * (NIR + SWIR1) - 0.25 * SWIR2",
+        "required_bands": [
+            "BLUE",
+            "GREEN",
+            "NIR",
+            "SWIR1",
+            "SWIR2"
+        ],
+        "parameters": {}
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Water",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "water_detection"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Water",
+        "negative_class": "Non-Water"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

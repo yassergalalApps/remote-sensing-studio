@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginDialog</class>
+ <widget class="QDialog" name="LoginDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Earth Engine Authentication</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    font-family: 'Segoe UI', 'Inter', 'Noto Sans', sans-serif;
+    color: #FFFFFF;
+}
+QDialog {
+    background-color: #0C1B30;
+}
+QFrame#headerFrame {
+    background-color: #12243B;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+QLabel#lblTitle {
+    color: #2B6CB0;
+    font-size: 16pt;
+    font-weight: bold;
+}
+QLabel {
+    font-size: 10pt;
+}
+QLabel#lblCurrentProject, QLabel#lblGEEStatusHeader {
+    color: #D7E3F4;
+    font-size: 9pt;
+}
+QPushButton {
+    background-color: #12243B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 16px;
+    color: #D7E3F4;
+    font-weight: 500;
+}
+QPushButton:hover {
+    background-color: #1E3A5F;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+QPushButton:pressed {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+QPushButton[cssClass="accent"] {
+    background-color: #2B6CB0;
+    color: white;
+    border: none;
+}
+QPushButton[cssClass="accent"]:hover {
+    background-color: #2C5282;
+}
+QPushButton[cssClass="sidebar"] {
+    text-align: left;
+    padding: 10px 15px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #D7E3F4;
+}
+QPushButton[cssClass="sidebar"]:hover {
+    background-color: rgba(43, 108, 176, 0.08);
+    color: #2B6CB0;
+}
+QGroupBox, QFrame[cssClass="card"] {
+    background-color: #12243B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-top: 3ex;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0px 5px;
+    left: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 11pt;
+}
+QTabWidget::pane {
+    border: none;
+    background: transparent;
+}
+QTabBar::tab {
+    background: transparent;
+    color: #B8C6D8;
+    padding: 12px 20px;
+    border: none;
+    font-size: 11pt;
+    font-weight: 500;
+}
+QTabBar::tab:selected {
+    color: #2B6CB0;
+    border-bottom: 3px solid #2B6CB0;
+    font-weight: 600;
+}
+QTabBar::tab:hover:!selected {
+    color: #D7E3F4;
+    background-color: #1E3A5F;
+    border-radius: 6px;
+}
+QFrame#statusBarFrame {
+    background-color: #12243B;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+QFrame#statusBarFrame QLabel {
+    color: #B8C6D8;
+    font-size: 9pt;
+}
+QListWidget {
+    background-color: transparent;
+    border: none;
+}
+QListWidget::item {
+    padding: 8px;
+    border-radius: 6px;
+    color: #D7E3F4;
+}
+QListWidget::item:hover {
+    background-color: #1E3A5F;
+}
+QListWidget::item:selected {
+    background-color: rgba(43, 108, 176, 0.1);
+    color: #2B6CB0;
+    font-weight: bold;
+}
+QComboBox {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: #12243B;
+}
+QComboBox:hover {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+QComboBox QAbstractItemView {
+    background-color: #12243B;
+    color: #FFFFFF;
+    selection-background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    outline: none;
+    padding: 4px;
+}
+QComboBox QAbstractItemView::item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #FFFFFF;
+}
+QComboBox QAbstractItemView::item:hover {
+    background-color: #1E3A5F;
+}
+QComboBox QAbstractItemView::item:selected {
+    background-color: #1E3A5F;
+    color: #27D8F7;
+    border-left: 3px solid #27D8F7;
+}
+QLineEdit {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 6px 12px;
+    background-color: #12243B;
+}
+QLineEdit:focus {
+    border: 1px solid #2B6CB0;
+}
+QSplitter::handle {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 1px;
+}
+QLineEdit, QDateEdit, QSpinBox, QDoubleSpinBox, QAbstractSpinBox {
+    color: #FFFFFF;
+    selection-color: #FFFFFF;
+    selection-background-color: #27D8F7;
+}
+QLineEdit::placeholder, QDateEdit::placeholder, QSpinBox::placeholder, QDoubleSpinBox::placeholder, QAbstractSpinBox::placeholder {
+    color: #B8C6D8;
+}
+QLineEdit:disabled, QDateEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QAbstractSpinBox:disabled, QComboBox:disabled {
+    color: #7E8EA5;
+}
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="margin">
+    <number>30</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="lblTitle">
+     <property name="text">
+      <string>Google Earth Engine Login</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="font">
+      <font><pointsize>14</pointsize><bold>true</bold><weight>700</weight></font>
+     </property>
+     <property name="styleSheet"><string>color: #2B6CB0;</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblDesc">
+     <property name="text">
+      <string>Sign in using your Google Account to access Earth Engine datasets and processing power.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap"><bool>true</bool></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnSignIn">
+     <property name="text">
+      <string>Sign in with Google</string>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="cssClass" stdset="0">
+      <string>accent</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnSwitchAccount">
+     <property name="text">
+      <string>Switch Account</string>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>40</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="statusGroupBox">
+     <property name="title">
+      <string>Connection Status</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="margin"><number>15</number></property>
+      <property name="spacing"><number>10</number></property>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="lblStatus">
+        <property name="text">
+         <string>&lt;font color="#D97706"&gt;● Not Connected&lt;/font&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0"><widget class="QLabel"><property name="text"><string>User:</string></property></widget></item>
+      <item row="1" column="1"><widget class="QLabel" name="lblUser"><property name="text"><string>Not Authenticated</string></property><property name="styleSheet"><string>color: #B8C6D8;</string></property></widget></item>
+      <item row="2" column="0"><widget class="QLabel"><property name="text"><string>Project ID:</string></property></widget></item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="cmbProject">
+        <property name="editable"><bool>false</bool></property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QPushButton" name="btnRefreshProjects">
+          <property name="text"><string>Refresh</string></property>
+          <property name="toolTip"><string>Refresh Project List</string></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnTestConnection">
+          <property name="text"><string>Connect</string></property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLabel" name="lblProjectHelp">
+        <property name="text"><string>&lt;small&gt;Select your Google Cloud Project for Earth Engine.&lt;/small&gt;</string></property>
+        <property name="wordWrap"><bool>true</bool></property>
+        <property name="openExternalLinks"><bool>true</bool></property>
+        <property name="styleSheet"><string>color: #8C99A8;</string></property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="2">
+       <widget class="QTextBrowser" name="txtDiscoveryError">
+        <property name="openExternalLinks"><bool>true</bool></property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="styleSheet"><string>background-color: rgba(239, 68, 68, 0.1); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 5px;</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer">
+     <property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btnCancel"><property name="text"><string>Cancel</string></property><property name="minimumSize"><size><width>100</width><height>35</height></size></property></widget></item>
+     <item><widget class="QPushButton" name="btnContinue"><property name="text"><string>Continue to Analysis</string></property><property name="minimumSize"><size><width>150</width><height>35</height></size></property><property name="enabled"><bool>false</bool></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

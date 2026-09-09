@@ -1,0 +1,8 @@
+{
+    "name": "Viridis",
+    "description": "Native QGIS Viridis color ramp",
+    "recommended_index": "NDVI",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.2,
+    "color_stops": []
+}

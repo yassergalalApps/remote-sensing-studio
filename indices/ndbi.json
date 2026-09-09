@@ -1,0 +1,83 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "NDBI",
+    "metadata": {
+        "display_name": "Normalized Difference Built-up Index",
+        "scientific_name": "NDBI",
+        "category": "urban",
+        "description": "Sensitive to built-up land and urban infrastructure while suppressing vegetation and water features.",
+        "units": "Index",
+        "order": 1,
+        "scientific_reference": "Zha, Y., Gao, J., & Ni, S. (2003). Use of normalized difference built-up index in automatically mapping urban areas from TM imagery. International Journal of Remote Sensing, 24(3), 583-594."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "(SWIR1 - NIR) / (SWIR1 + NIR)",
+        "required_bands": [
+            "SWIR1",
+            "NIR"
+        ],
+        "parameters": {},
+        "reference": "Zha, Y., Gao, J., & Ni, S. (2003). Use of normalized difference built-up index in automatically mapping urban areas from TM imagery. International Journal of Remote Sensing, 24(3), 583-594."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Urban",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "urban"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Built-up Land",
+        "negative_class": "Non Built-up Land"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_ndbi",
+                "expression": "SWIR1 + NIR",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

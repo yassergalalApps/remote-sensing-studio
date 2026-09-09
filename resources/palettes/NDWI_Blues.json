@@ -1,0 +1,24 @@
+{
+    "name": "NDWI Blues",
+    "description": "Blue color ramp for water indices",
+    "recommended_index": "NDWI",
+    "recommended_display_range": [
+        -1.0,
+        1.0
+    ],
+    "recommended_threshold": 0.0,
+    "color_stops": [
+        {
+            "value": -1.0,
+            "color": "#F7FBFF"
+        },
+        {
+            "value": 0.0,
+            "color": "#9ECAE1"
+        },
+        {
+            "value": 1.0,
+            "color": "#08306B"
+        }
+    ]
+}

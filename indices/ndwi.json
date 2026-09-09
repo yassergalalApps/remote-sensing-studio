@@ -1,0 +1,83 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "NDWI",
+    "metadata": {
+        "display_name": "Normalized Difference Water Index",
+        "scientific_name": "NDWI",
+        "category": "Spectral Index",
+        "description": "Surface Water Detection",
+        "units": "Index",
+        "order": 1
+    },
+    "workspace": "water",
+    "formula": {
+        "engine": "expression",
+        "expression": "(GREEN - NIR) / (GREEN + NIR)",
+        "required_bands": [
+            "GREEN",
+            "NIR"
+        ],
+        "parameters": {}
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Water",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "water_detection"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Water",
+        "negative_class": "Non-Water"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_ndwi",
+                "expression": "GREEN + NIR",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": true,
+            "min": -1.0,
+            "max": 1.0
+        }
+    }
+}

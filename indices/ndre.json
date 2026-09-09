@@ -1,0 +1,87 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "NDRE",
+    "metadata": {
+        "display_name": "Normalized Difference Red Edge Index",
+        "scientific_name": "NDRE",
+        "category": "Spectral Index",
+        "description": "More sensitive than NDVI for dense vegetation canopies by using the Red Edge band.",
+        "units": "Index",
+        "order": 6
+    },
+    "workspace": "vegetation",
+    "formula": {
+        "engine": "expression",
+        "expression": "(NIR - RED_EDGE) / (NIR + RED_EDGE)",
+        "required_bands": [
+            "NIR",
+            "RED_EDGE"
+        ],
+        "expected_input": "reflectance",
+        "expected_output_range": [
+            -1.0,
+            1.0
+        ],
+        "recommended_threshold": 0.2,
+        "reference": "Barnes et al., 2000"
+    },
+    "default_parameters": {
+        "threshold": 0.2
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "RdYlGn",
+        "minimum": -0.2,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "vegetation"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Healthy Dense Vegetation",
+        "negative_class": "Low Biomass/Soil"
+    },
+    "supported_satellites": [
+        "Sentinel-2"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_ndre",
+                "expression": "NIR + RED_EDGE",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": true,
+            "min": -1.0,
+            "max": 1.0
+        }
+    }
+}

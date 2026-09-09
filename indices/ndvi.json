@@ -1,0 +1,83 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "NDVI",
+    "metadata": {
+        "display_name": "Normalized Difference Vegetation Index",
+        "scientific_name": "NDVI",
+        "category": "Spectral Index",
+        "description": "Vegetation Greenness Index",
+        "units": "Index",
+        "order": 1
+    },
+    "workspace": "vegetation",
+    "formula": {
+        "engine": "expression",
+        "expression": "(NIR - RED) / (NIR + RED)",
+        "required_bands": [
+            "NIR",
+            "RED"
+        ],
+        "parameters": {}
+    },
+    "default_parameters": {
+        "threshold": 0.2
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "RdYlGn",
+        "minimum": -0.2,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "vegetation"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Vegetation",
+        "negative_class": "Water/Bare Soil"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_ndvi",
+                "expression": "NIR + RED",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": true,
+            "min": -1.0,
+            "max": 1.0
+        }
+    }
+}

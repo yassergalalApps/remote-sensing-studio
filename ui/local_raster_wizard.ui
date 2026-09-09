@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LocalRasterWizardDialog</class>
+ <widget class="QDialog" name="LocalRasterWizardDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Local Raster Analysis</string>
+  </property>
+  <property name="styleSheet">
+   <string>
+QDialog {
+    background-color: #0C1B30;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+QGroupBox {
+    background-color: #12243B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-top: 16px;
+    font-size: 11pt;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 8px;
+    color: #D7E3F4;
+}
+QPushButton {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 9pt;
+    background-color: #12243B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #D7E3F4;
+}
+QPushButton:hover {
+    background-color: #1E3A5F;
+}
+QPushButton[cssClass="accent"] {
+    background-color: #27D8F7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 10pt;
+}
+QPushButton[cssClass="accent"]:hover {
+    background-color: #27D8F7;
+}
+QPushButton:disabled {
+    background-color: #1E3A5F;
+    color: #7E8EA5;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+QTableView, QTableWidget {
+    background-color: #1E3A5F;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    gridline-color: rgba(255, 255, 255, 0.10);
+    alternate-background-color: #0C1B30;
+    selection-background-color: rgba(39, 216, 247, 0.2);
+    selection-color: #FFFFFF;
+}
+QTableView::item, QTableWidget::item {
+    color: #FFFFFF;
+    background-color: transparent;
+}
+QTableView::item:selected, QTableWidget::item:selected {
+    color: #FFFFFF;
+    background-color: rgba(39, 216, 247, 0.2);
+}
+QTableView::item:alternate, QTableWidget::item:alternate {
+    color: #FFFFFF;
+}
+QTableView::item:disabled, QTableWidget::item:disabled {
+    color: #AFC4D8;
+}
+QHeaderView::section {
+    background-color: #0C1B30;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    color: #FFFFFF;
+}
+QLabel#lblTitle {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+QComboBox QAbstractItemView {
+    background-color: #12243B;
+    color: #FFFFFF;
+    selection-background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    outline: none;
+    padding: 4px;
+}
+QComboBox QAbstractItemView::item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #FFFFFF;
+}
+QComboBox QAbstractItemView::item:hover {
+    background-color: #1E3A5F;
+}
+QComboBox QAbstractItemView::item:selected {
+    background-color: #1E3A5F;
+    color: #27D8F7;
+    border-left: 3px solid #27D8F7;
+}
+QLineEdit, QDateEdit, QSpinBox, QDoubleSpinBox, QAbstractSpinBox {
+    color: #FFFFFF;
+    selection-color: #FFFFFF;
+    selection-background-color: #27D8F7;
+    background-color: #12243B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 4px;
+}
+QLineEdit::placeholder, QDateEdit::placeholder, QSpinBox::placeholder, QDoubleSpinBox::placeholder, QAbstractSpinBox::placeholder {
+    color: #B8C6D8;
+}
+QLineEdit:disabled, QDateEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QAbstractSpinBox:disabled, QComboBox:disabled {
+    color: #7E8EA5;
+}
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="spacing"><number>20</number></property>
+   <property name="margin"><number>30</number></property>
+   
+   <item>
+    <widget class="QLabel" name="lblTitle">
+     <property name="text"><string>Local Raster Analysis</string></property>
+    </widget>
+   </item>
+   
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     
+     <!-- Page 1: Configuration -->
+     <widget class="QWidget" name="pageConfig">
+      <layout class="QVBoxLayout">
+       <property name="margin"><number>0</number></property>
+       <item>
+        <widget class="QScrollArea">
+         <property name="widgetResizable"><bool>true</bool></property>
+         <property name="frameShape"><enum>QFrame::NoFrame</enum></property>
+         <widget class="QWidget" name="scrollContent">
+          <layout class="QVBoxLayout">
+           
+           <!-- Dataset Selection -->
+           <item>
+            <widget class="QGroupBox" name="grpDataset">
+             <property name="title"><string>Local Raster Dataset</string></property>
+             <layout class="QVBoxLayout">
+              <property name="spacing"><number>15</number></property>
+              
+              <item>
+               <layout class="QHBoxLayout">
+                <item><widget class="QLineEdit" name="txtRasterFile"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Select a local raster dataset for offline analysis...</string></property></widget></item>
+                <item><widget class="QPushButton" name="btnBrowseRaster"><property name="text"><string>Browse Raster</string></property></widget></item>
+               </layout>
+              </item>
+              
+              <item>
+               <widget class="QTextBrowser" name="txtRasterMetadata">
+                <property name="styleSheet"><string>border: none; background: transparent; font-size: 10pt; color: #AFC4D8;</string></property>
+                <property name="html"><string>Waiting for raster selection...</string></property>
+               </widget>
+              </item>
+              
+             </layout>
+            </widget>
+           </item>
+
+           <!-- Band Mapping -->
+           <item>
+            <widget class="QGroupBox" name="grpBandMapping">
+             <property name="title"><string>Band Mapping</string></property>
+             <layout class="QVBoxLayout">
+              <property name="spacing"><number>15</number></property>
+              
+              <item>
+               <widget class="QLabel" name="lblAnalysisName">
+                <property name="text"><string>Analysis: Unknown</string></property>
+                <property name="styleSheet"><string>font-size: 12pt; font-weight: bold; color: #27D8F7;</string></property>
+               </widget>
+              </item>
+              
+              <item>
+               <layout class="QHBoxLayout">
+                <item><widget class="QLabel"><property name="text"><string>Satellite / Sensor Preset:</string></property><property name="minimumSize"><size><width>150</width><height>0</height></size></property></widget></item>
+                <item><widget class="QComboBox" name="cmbSensor"></widget></item>
+               </layout>
+              </item>
+              
+              <item>
+               <widget class="QLabel" name="lblBandStatus">
+                <property name="text"><string>&lt;i style="color: #AFC4D8;"&gt;Waiting for raster selection...&lt;/i&gt;</string></property>
+                <property name="textFormat"><enum>Qt::RichText</enum></property>
+               </widget>
+              </item>
+              
+              <item>
+               <widget class="QFrame" name="frameBands">
+                <layout class="QVBoxLayout" name="layoutBands">
+                 <property name="margin"><number>0</number></property>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+
+           <!-- Study Area -->
+           <item>
+            <widget class="QGroupBox" name="grpStudyArea">
+             <property name="title"><string>Study Area Mask</string></property>
+             <layout class="QVBoxLayout">
+              <property name="spacing"><number>15</number></property>
+              <item>
+               <layout class="QHBoxLayout">
+                <item><widget class="QLabel"><property name="text"><string>Area of Interest (AOI):</string></property><property name="minimumSize"><size><width>150</width><height>0</height></size></property></widget></item>
+                <item>
+                 <widget class="QComboBox" name="cmbAoi">
+                  <item><property name="text"><string>Current Map Extent</string></property></item>
+                  <item><property name="text"><string>Selected Features in Active Layer</string></property></item>
+                  <item><property name="text"><string>Active Layer Bounding Box</string></property></item>
+                  <item><property name="text"><string>Draw Polygon</string></property></item>
+                  <item><property name="text"><string>Browse Vector File</string></property></item>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QStackedWidget" name="stkAoiControls">
+                <property name="maximumSize"><size><width>16777215</width><height>50</height></size></property>
+                <widget class="QWidget" name="pageAoiEmpty"><layout class="QVBoxLayout"><property name="margin"><number>0</number></property></layout></widget>
+                <widget class="QWidget" name="pageAoiDraw">
+                 <layout class="QHBoxLayout">
+                  <property name="margin"><number>0</number></property>
+                  <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>150</width><height>20</height></size></property></spacer></item>
+                  <item><widget class="QPushButton" name="btnStartDrawing"><property name="text"><string>Start Drawing on Map</string></property></widget></item>
+                  <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="pageAoiFile">
+                 <layout class="QHBoxLayout">
+                  <property name="margin"><number>0</number></property>
+                  <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>150</width><height>20</height></size></property></spacer></item>
+                  <item><widget class="QLineEdit" name="txtAoiFile"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Select .shp, .gpkg, .geojson...</string></property></widget></item>
+                  <item><widget class="QPushButton" name="btnBrowseAoi"><property name="text"><string>Browse...</string></property></widget></item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblAoiSummary">
+                <property name="text"><string>&lt;i style="color: #B8C6D8;"&gt;No valid AOI captured yet.&lt;/i&gt;</string></property>
+                <property name="textFormat"><enum>Qt::RichText</enum></property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+
+           <item><spacer><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     
+     <!-- Page 2: Progress -->
+     <widget class="QWidget" name="pageProgress">
+      <layout class="QVBoxLayout">
+       <item><spacer><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+       <item>
+        <widget class="QLabel" name="lblStatus">
+         <property name="text"><string>Preparing Local Analysis...</string></property>
+         <property name="alignment"><set>Qt::AlignCenter</set></property>
+         <property name="styleSheet"><string>font-size: 14pt; font-weight: 600; color: #27D8F7;</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value"><number>0</number></property>
+         <property name="textVisible"><bool>false</bool></property>
+         <property name="minimumSize"><size><width>0</width><height>15</height></size></property>
+         <property name="maximumSize"><size><width>16777215</width><height>15</height></size></property>
+         <property name="styleSheet"><string>
+QProgressBar {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
+}
+QProgressBar::chunk {
+    background-color: #27D8F7;
+    border-radius: 7px;
+}
+         </string></property>
+        </widget>
+       </item>
+       <item><spacer><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </widget>
+
+     <!-- Page 3: Summary -->
+     <widget class="QWidget" name="pageSummary">
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QLabel" name="lblSummaryTitle">
+         <property name="text"><string>Analysis Complete!</string></property>
+         <property name="alignment"><set>Qt::AlignCenter</set></property>
+         <property name="styleSheet"><string>font-size: 18pt; font-weight: bold; color: #10B981;</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextBrowser" name="txtSummary">
+         <property name="styleSheet"><string>border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background-color: #12243B; font-size: 11pt; padding: 10px; color: #FFFFFF;</string></property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     
+    </widget>
+   </item>
+   
+   <item>
+    <widget class="QFrame" name="buttonFrame">
+     <layout class="QHBoxLayout">
+      <property name="margin"><number>0</number></property>
+      <item>
+       <widget class="QPushButton" name="btnCancel">
+        <property name="text"><string>Cancel</string></property>
+        <property name="cssClass" stdset="0"><string>none</string></property>
+       </widget>
+      </item>
+      <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+      <item>
+       <widget class="QPushButton" name="btnBack">
+        <property name="text"><string>Back</string></property>
+        <property name="cssClass" stdset="0"><string>none</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnRun">
+        <property name="text"><string>Run Analysis</string></property>
+        <property name="cssClass" stdset="0"><string>accent</string></property>
+        <property name="enabled"><bool>false</bool></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnFinish">
+        <property name="text"><string>Finish</string></property>
+        <property name="cssClass" stdset="0"><string>accent</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,8 @@
+{
+    "name": "Oranges",
+    "description": "Native QGIS Oranges color ramp",
+    "recommended_index": "Urban",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.0,
+    "color_stops": []
+}

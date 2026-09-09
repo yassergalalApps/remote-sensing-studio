@@ -1,0 +1,81 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "EBBI",
+    "metadata": {
+        "display_name": "Enhanced Built-up and Bare Land Index",
+        "scientific_name": "EBBI",
+        "category": "urban",
+        "description": "Simultaneously identifies built-up and bare land features by integrating shortwave infrared, near-infrared, and thermal infrared emissive contrast.",
+        "units": "Index",
+        "order": 5,
+        "scientific_reference": "As-syakur, A. R., Adnyana, I. W. S., Arthana, I. W., & Nuarsa, I. W. (2012). Enhanced Built-Up and Bareness Index (EBBI) for Mapping Built-Up and Bare Land in an Urban Area. Remote Sensing, 4(10), 2957-2970."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "(SWIR1 - NIR) / (10.0 * ((SWIR1 + TIR) ** 0.5))",
+        "required_bands": [
+            "SWIR1",
+            "NIR",
+            "TIR"
+        ],
+        "parameters": {},
+        "reference": "As-syakur, A. R., Adnyana, I. W. S., Arthana, I. W., & Nuarsa, I. W. (2012). Enhanced Built-Up and Bareness Index (EBBI) for Mapping Built-Up and Bare Land in an Urban Area. Remote Sensing, 4(10), 2957-2970."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Urban",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "urban"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Built-up / Bare Land",
+        "negative_class": "Vegetated / Hydrosphere"
+    },
+    "supported_satellites": [
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "hybrid",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "availability": {
+        "supported": false,
+        "reason": "Formula/unit incompatibility with current Level-2 canonical inputs"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

@@ -1,0 +1,89 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "CIgreen",
+    "metadata": {
+        "display_name": "Chlorophyll Index Green",
+        "scientific_name": "CIgreen",
+        "category": "Spectral Index",
+        "description": "Designed specifically for chlorophyll estimation and vegetation vigor monitoring.",
+        "units": "Index",
+        "order": 7
+    },
+    "workspace": "vegetation",
+    "formula": {
+        "engine": "expression",
+        "expression": "(NIR / GREEN) - 1",
+        "required_bands": [
+            "NIR",
+            "GREEN"
+        ],
+        "expected_input": "reflectance",
+        "expected_output_range": [
+            0.0,
+            15.0
+        ],
+        "recommended_threshold": 3.0,
+        "reference": "Gitelson et al., 2003"
+    },
+    "default_parameters": {
+        "threshold": 3.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "RdYlGn",
+        "minimum": 0.0,
+        "maximum": 15.0,
+        "nodata": "transparent",
+        "renderer_family": "vegetation"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "High Vigor/Chlorophyll",
+        "negative_class": "Low Vigor/Soil"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_cigreen",
+                "expression": "GREEN",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": true,
+            "min": 0.0,
+            "max": 15.0
+        }
+    }
+}

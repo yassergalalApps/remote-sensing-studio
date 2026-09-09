@@ -1,0 +1,38 @@
+[
+  {
+    "id": "vegetation",
+    "display_name": "Vegetation",
+    "description": "Vegetation monitoring and analysis.",
+    "icon": ":/plugins/remote_sensing_studio/icons/leaf.svg",
+    "primary_color": "#1FA84A",
+    "accent_color": "#DFF7E7",
+    "order": 1
+  },
+  {
+    "id": "water",
+    "display_name": "Water Resources",
+    "description": "Water detection and hydrological analysis.",
+    "icon": ":/plugins/remote_sensing_studio/icons/water.svg",
+    "primary_color": "#1E88E5",
+    "accent_color": "#E3F2FD",
+    "order": 2
+  },
+  {
+    "id": "urban",
+    "display_name": "Urban",
+    "description": "Urban and built-up area analysis.",
+    "icon": ":/plugins/remote_sensing_studio/icons/city.svg",
+    "primary_color": "#6C5CE7",
+    "accent_color": "#F3E8FF",
+    "order": 3
+  },
+  {
+    "id": "environmental",
+    "display_name": "Download Scene",
+    "description": "Download satellite scenes or composite datasets clipped to the active study area for local and offline remote-sensing analysis.",
+    "icon": ":/plugins/remote_sensing_studio/icons/environment.svg",
+    "primary_color": "#16A085",
+    "accent_color": "#E0F2F1",
+    "order": 4
+  }
+]

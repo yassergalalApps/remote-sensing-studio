@@ -1,0 +1,8 @@
+{
+    "name": "BuGn",
+    "description": "Native QGIS BuGn color ramp",
+    "recommended_index": "NDWI",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.0,
+    "color_stops": []
+}

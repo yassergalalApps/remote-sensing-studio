@@ -1,0 +1,28 @@
+{
+    "name": "Terrain",
+    "description": "Standard terrain color ramp for elevation",
+    "recommended_index": "DEM",
+    "recommended_display_range": [
+        0,
+        3000
+    ],
+    "recommended_threshold": 1000,
+    "color_stops": [
+        {
+            "value": 0.0,
+            "color": "#33A02C"
+        },
+        {
+            "value": 0.3,
+            "color": "#B2DF8A"
+        },
+        {
+            "value": 0.6,
+            "color": "#FDBF6F"
+        },
+        {
+            "value": 1.0,
+            "color": "#FF7F00"
+        }
+    ]
+}

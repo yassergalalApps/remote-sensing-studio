@@ -1,0 +1,90 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "DBSI",
+    "metadata": {
+        "display_name": "Dry Bare Soil Index",
+        "scientific_name": "DBSI",
+        "category": "bare_soil",
+        "description": "Optimized for arid and semi-arid regions to disentangle spectral similarities between dry bare soils and built-up city impervious surfaces.",
+        "units": "Index",
+        "order": 7,
+        "scientific_reference": "Rasul, A., Balzter, H., & Smith, C. (2018). Applying Built-Up and Bare-Soil Indices from Landsat 8 to Cities in Dry Climates. Land, 7(3), 81."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "((SWIR1 - GREEN) / (SWIR1 + GREEN)) - ((NIR - RED) / (NIR + RED))",
+        "required_bands": [
+            "SWIR1",
+            "GREEN",
+            "NIR",
+            "RED"
+        ],
+        "parameters": {},
+        "reference": "Rasul, A., Balzter, H., & Smith, C. (2018). Applying Built-Up and Bare-Soil Indices from Landsat 8 to Cities in Dry Climates. Land, 7(3), 81."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Bare Soil",
+        "minimum": -2.0,
+        "maximum": 2.0,
+        "nodata": "transparent",
+        "renderer_family": "bare_soil"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Dry Bare Soil",
+        "negative_class": "Urban / Vegetated / Water"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_swir1_green",
+                "expression": "SWIR1 + GREEN",
+                "epsilon": 1e-06
+            },
+            {
+                "id": "denom_nir_red",
+                "expression": "NIR + RED",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

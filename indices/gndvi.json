@@ -1,0 +1,89 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "GNDVI",
+    "metadata": {
+        "display_name": "Green Normalized Difference Vegetation Index",
+        "scientific_name": "GNDVI",
+        "category": "Spectral Index",
+        "description": "Vegetation index that replaces the red band with the green band to improve sensitivity to chlorophyll concentration.",
+        "units": "Index",
+        "order": 5
+    },
+    "workspace": "vegetation",
+    "formula": {
+        "engine": "expression",
+        "expression": "(NIR - GREEN) / (NIR + GREEN)",
+        "required_bands": [
+            "NIR",
+            "GREEN"
+        ],
+        "expected_input": "reflectance",
+        "expected_output_range": [
+            -1.0,
+            1.0
+        ],
+        "recommended_threshold": 0.2,
+        "reference": "Gitelson et al., 1996"
+    },
+    "default_parameters": {
+        "threshold": 0.2
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "RdYlGn",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "vegetation"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "High Chlorophyll",
+        "negative_class": "Low Chlorophyll/Soil"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_gndvi",
+                "expression": "NIR + GREEN",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": true,
+            "min": -1.0,
+            "max": 1.0
+        }
+    }
+}

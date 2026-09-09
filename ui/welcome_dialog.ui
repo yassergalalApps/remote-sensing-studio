@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WelcomeDialog</class>
+ <widget class="QDialog" name="WelcomeDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>950</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Welcome - Remote Sensing Analysis Studio</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+#WelcomeDialog {
+    background-color: #040D1F;
+}
+#WelcomeDialog QWidget {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Header */
+#WelcomeDialog QLabel#lblHeaderTitle {
+    color: #ffffff;
+    font-size: 14pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#WelcomeDialog QLabel#lblHeaderSubtitle {
+    color: #4fd1c5;
+    font-size: 10pt;
+    font-weight: 500;
+}
+
+/* Text */
+#WelcomeDialog QLabel#lblWelcome {
+    color: #4fd1c5;
+    font-size: 10pt;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+#WelcomeDialog QLabel#lblTitle {
+    color: #ffffff;
+    font-size: 26pt;
+    font-weight: 800;
+}
+#WelcomeDialog QLabel#lblDesc {
+    color: #B8C6D8;
+    font-size: 11pt;
+    line-height: 1.5;
+}
+#WelcomeDialog QLabel#lblSection {
+    color: #38b2ac;
+    font-size: 10pt;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+/* Radio Button Cards */
+#WelcomeDialog QRadioButton {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(79, 209, 197, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    color: #ffffff;
+    font-size: 13pt;
+    font-weight: 600;
+}
+#WelcomeDialog QRadioButton::indicator {
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    border: 2px solid #4fd1c5;
+    background: transparent;
+    margin-right: 12px;
+}
+#WelcomeDialog QRadioButton::indicator:checked {
+    background: qradialgradient(cx:0.5, cy:0.5, radius:0.4, fx:0.5, fy:0.5, stop:0 #4fd1c5, stop:1 transparent);
+    border: 2px solid #81e6d9;
+}
+#WelcomeDialog QRadioButton:hover {
+    background-color: rgba(79, 209, 197, 0.08);
+    border: 1px solid rgba(79, 209, 197, 0.6);
+}
+#WelcomeDialog QRadioButton:checked {
+    background-color: rgba(79, 209, 197, 0.1);
+    border: 1px solid #4fd1c5;
+}
+
+/* Continue Button */
+#WelcomeDialog QPushButton#btnContinue {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #00b5d8, stop:1 #319795);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 10px 24px;
+}
+#WelcomeDialog QPushButton#btnContinue:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #319795, stop:1 #2c7a7b);
+}
+#WelcomeDialog QPushButton#btnContinue:pressed {
+    background: #285e61;
+}
+
+/* Footer Items */
+#WelcomeDialog QLabel#lblSecure, #WelcomeDialog QLabel#lblPowerful, #WelcomeDialog QLabel#lblAccurate {
+    color: #B8C6D8;
+    font-size: 10pt;
+    font-weight: 500;
+}
+QLineEdit, QDateEdit, QSpinBox, QDoubleSpinBox, QAbstractSpinBox {
+    color: #FFFFFF;
+    selection-color: #FFFFFF;
+    selection-background-color: #27D8F7;
+}
+QLineEdit::placeholder, QDateEdit::placeholder, QSpinBox::placeholder, QDoubleSpinBox::placeholder, QAbstractSpinBox::placeholder {
+    color: #B8C6D8;
+}
+QLineEdit:disabled, QDateEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QAbstractSpinBox:disabled, QComboBox:disabled {
+    color: #7E8EA5;
+}
+   </string>
+  </property>
+
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="spacing"><number>0</number></property>
+   <property name="leftMargin"><number>0</number></property>
+   <property name="topMargin"><number>0</number></property>
+   <property name="rightMargin"><number>0</number></property>
+   <property name="bottomMargin"><number>0</number></property>
+
+   <item>
+    <widget class="QFrame" name="headerFrame">
+     <property name="minimumSize"><size><width>0</width><height>70</height></size></property>
+     <property name="maximumSize"><size><width>16777215</width><height>70</height></size></property>
+     <layout class="QHBoxLayout">
+      <property name="leftMargin"><number>25</number></property>
+      <property name="rightMargin"><number>25</number></property>
+      
+      <item>
+       <widget class="QLabel" name="lblLogoIcon">
+        <property name="minimumSize"><size><width>40</width><height>40</height></size></property>
+        <property name="maximumSize"><size><width>40</width><height>40</height></size></property>
+        <property name="pixmap"><pixmap>:/plugins/remote_sensing_studio/icons/plugin_icon.png</pixmap></property>
+        <property name="scaledContents"><bool>true</bool></property>
+       </widget>
+      </item>
+      
+      <item>
+       <layout class="QVBoxLayout">
+        <property name="spacing"><number>10</number></property>
+        <item><widget class="QLabel" name="lblHeaderTitle"><property name="text"><string>REMOTE SENSING STUDIO</string></property><property name="wordWrap"><bool>true</bool></property></widget></item>
+        <item><widget class="QLabel" name="lblHeaderSubtitle"><property name="text"><string>Professional Edition</string></property></widget></item>
+       </layout>
+      </item>
+      
+      <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+      
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QFrame" name="contentFrame">
+     <layout class="QHBoxLayout">
+      <property name="spacing"><number>0</number></property>
+      <property name="leftMargin"><number>0</number></property>
+      <property name="topMargin"><number>0</number></property>
+      <property name="rightMargin"><number>0</number></property>
+      <property name="bottomMargin"><number>0</number></property>
+
+      <!-- Left Side Illustration -->
+      <item>
+       <widget class="QFrame" name="leftFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>42</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout" name="leftLayout">
+         <property name="spacing"><number>10</number></property>
+         <property name="leftMargin"><number>20</number></property>
+         <property name="topMargin"><number>20</number></property>
+         <property name="rightMargin"><number>20</number></property>
+         <property name="bottomMargin"><number>10</number></property>
+         <item>
+          <widget class="QLabel" name="lblHeroImage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="alignment"><set>Qt::AlignCenter</set></property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDevelopedBy">
+           <property name="text"><string>Developed by Yasser Galal</string></property>
+           <property name="alignment"><set>Qt::AlignCenter</set></property>
+           <property name="styleSheet"><string>color: rgba(255, 255, 255, 0.6); font-size: 9pt;</string></property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnContactSupport">
+           <property name="text"><string>Contact &amp; Support →</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="styleSheet"><string>QPushButton { color: #4fd1c5; border: none; background: transparent; font-size: 10pt; font-weight: bold; } QPushButton:hover { color: #81e6d9; text-decoration: underline; }</string></property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnWebDemo">
+           <property name="text"><string>Remote Sensing Studio Web Demo →</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="styleSheet"><string>QPushButton { color: #27D8F7; border: none; background: transparent; font-size: 10pt; font-weight: bold; } QPushButton:hover { color: #60A5FA; text-decoration: underline; }</string></property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+
+      <!-- Right Side Content -->
+      <item>
+       <widget class="QFrame" name="rightFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>58</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout">
+         <property name="leftMargin"><number>40</number></property>
+         <property name="rightMargin"><number>40</number></property>
+         <property name="topMargin"><number>30</number></property>
+         <property name="bottomMargin"><number>30</number></property>
+         <property name="spacing"><number>20</number></property>
+
+         <item><widget class="QLabel" name="lblWelcome"><property name="text"><string>WELCOME TO</string></property></widget></item>
+         <item>
+          <widget class="QLabel" name="lblTitle">
+           <property name="text"><string>Remote Sensing Studio</string></property>
+           <property name="wordWrap"><bool>true</bool></property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         
+         <item>
+          <widget class="QLabel" name="lblDesc">
+           <property name="text"><string>Analyze satellite imagery using either Google Earth Engine or Local Raster datasets.</string></property>
+           <property name="wordWrap"><bool>true</bool></property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+
+         <item><spacer><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>20</height></size></property></spacer></item>
+
+         <item><widget class="QLabel" name="lblSection"><property name="text"><string>CHOOSE WORKING MODE</string></property></widget></item>
+         
+         <item>
+          <widget class="QRadioButton" name="rbGEE">
+           <property name="text"><string>Google Earth Engine
+Cloud-based processing and analysis</string></property>
+           <property name="checked"><bool>true</bool></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          </widget>
+         </item>
+         
+         <item>
+          <widget class="QRadioButton" name="rbLocal">
+           <property name="text"><string>Local Raster Files
+Work with local raster datasets offline</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          </widget>
+         </item>
+
+         <item><spacer><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+         
+         <!-- Footer row with Continue button -->
+         <item>
+          <layout class="QHBoxLayout">
+           <item><widget class="QLabel" name="lblSecure"><property name="text"><string>✔ Secure</string></property><property name="styleSheet"><string>color: #B8C6D8; font-size: 10pt; font-weight: 500;</string></property></widget></item>
+           <item><widget class="QLabel" name="lblPowerful"><property name="text"><string>⚡ Powerful</string></property><property name="styleSheet"><string>color: #B8C6D8; font-size: 10pt; font-weight: 500;</string></property></widget></item>
+           <item><widget class="QLabel" name="lblAccurate"><property name="text"><string>📊 Accurate</string></property><property name="styleSheet"><string>color: #B8C6D8; font-size: 10pt; font-weight: 500;</string></property></widget></item>
+           <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+           <item>
+            <widget class="QPushButton" name="btnContinue">
+             <property name="text"><string>Continue  →</string></property>
+             <property name="minimumSize"><size><width>150</width><height>45</height></size></property>
+             <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

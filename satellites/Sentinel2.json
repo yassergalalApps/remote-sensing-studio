@@ -1,0 +1,49 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "satellite_id": "Sentinel-2",
+    "display_name": "Sentinel-2 MSI",
+    "provider": "Google Earth Engine",
+    "collection_id": "COPERNICUS/S2_SR_HARMONIZED",
+    "native_resolution": 10,
+    "supported_resolutions": [
+        10,
+        20,
+        60
+    ],
+    "native_crs": "EPSG:4326",
+    "band_mapping": {
+        "RED": "B4",
+        "NIR": "B8",
+        "GREEN": "B3",
+        "BLUE": "B2",
+        "RED_EDGE": "B5",
+        "SWIR1": "B11",
+        "SWIR2": "B12"
+    },
+    "band_metadata": {},
+    "cloud_mask_strategy": "QA60",
+    "qa_band": "QA60",
+    "nodata_value": 0,
+    "capabilities": {
+        "supports_red_edge": true,
+        "supports_swir": true,
+        "supports_thermal": false,
+        "supports_panchromatic": false,
+        "supports_surface_reflectance": true,
+        "supports_time_series": true,
+        "supports_multiresolution": true
+    },
+    "stored_as_scaled_integers": true,
+    "scale_factor": 0.0001,
+    "additive_offset": 0.0,
+    "valid_range": [
+        1,
+        10000
+    ],
+    "fill_values": [
+        0
+    ],
+    "physical_units": "reflectance"
+}

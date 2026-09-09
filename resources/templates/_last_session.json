@@ -1,0 +1,9 @@
+{
+    "Palette": "RdYlGn",
+    "Classification Method": "Continuous",
+    "Display Range": [
+        -0.04,
+        0.88
+    ],
+    "Threshold": 0.2
+}

@@ -1,0 +1,32 @@
+{
+    "name": "Standard NDVI",
+    "description": "Standard diverging color ramp for vegetation",
+    "recommended_index": "NDVI",
+    "recommended_display_range": [
+        -1.0,
+        1.0
+    ],
+    "recommended_threshold": 0.2,
+    "color_stops": [
+        {
+            "value": -1.0,
+            "color": "#000000"
+        },
+        {
+            "value": 0.0,
+            "color": "#FFFFFF"
+        },
+        {
+            "value": 0.2,
+            "color": "#E6F598"
+        },
+        {
+            "value": 0.6,
+            "color": "#66BD63"
+        },
+        {
+            "value": 1.0,
+            "color": "#006837"
+        }
+    ]
+}

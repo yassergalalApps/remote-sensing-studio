@@ -1,0 +1,15 @@
+{
+    "name": "Water",
+    "description": "Water detection color ramp",
+    "recommended_index": "NDWI",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.0,
+    "color_stops": [
+        {"value": -1.0, "color": "#FFFFFF"},
+        {"value": -0.6, "color": "#D9F2FF"},
+        {"value": -0.2, "color": "#8FD3FF"},
+        {"value": 0.2, "color": "#3399FF"},
+        {"value": 0.6, "color": "#005CE6"},
+        {"value": 1.0, "color": "#001F99"}
+    ]
+}

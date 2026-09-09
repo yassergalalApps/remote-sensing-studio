@@ -1,0 +1,25 @@
+# QGIS Plugin and Python ignores
+__pycache__/
+*.pyc
+*.pyo
+*.bak
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+.pytest_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+
+# Ignore the separate React website repository folder
+website/
+
+# Ignore the temporary backup of the bundled ext_libs
+bak_ext_libs/
+
+# Ignore diagnostic scripts
+test_versions.py
+test_webp.py
+qthread_test.py

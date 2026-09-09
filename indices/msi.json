@@ -1,0 +1,81 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "MSI",
+    "metadata": {
+        "display_name": "Moisture Stress Index",
+        "scientific_name": "MSI",
+        "category": "Spectral Index",
+        "description": "Moisture Stress Index",
+        "units": "Index",
+        "order": 7
+    },
+    "workspace": "water",
+    "formula": {
+        "engine": "expression",
+        "expression": "SWIR1 / NIR",
+        "required_bands": [
+            "NIR",
+            "SWIR1"
+        ],
+        "parameters": {}
+    },
+    "default_parameters": {
+        "threshold": 1.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Moisture Stress",
+        "minimum": 0.0,
+        "maximum": 2.0,
+        "nodata": "transparent",
+        "renderer_family": "moisture_stress"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "High Moisture Stress",
+        "negative_class": "Low Moisture Stress"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [
+            {
+                "id": "denom_msi",
+                "expression": "NIR",
+                "epsilon": 1e-06
+            }
+        ],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

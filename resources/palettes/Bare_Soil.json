@@ -1,0 +1,15 @@
+{
+    "name": "Bare Soil",
+    "description": "Realistic natural bare soil color ramp (Cream to Dark Brown)",
+    "recommended_index": "BSI",
+    "recommended_display_range": [-1.0, 1.0],
+    "recommended_threshold": 0.0,
+    "color_stops": [
+        {"value": -1.0, "color": "#FCF8E3"},
+        {"value": -0.6, "color": "#EEDC82"},
+        {"value": -0.2, "color": "#D2B48C"},
+        {"value": 0.2, "color": "#A67B5B"},
+        {"value": 0.6, "color": "#734A12"},
+        {"value": 1.0, "color": "#3F2A14"}
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Moisture Stress",
+    "description": "Moisture stress color ramp",
+    "recommended_index": "MSI",
+    "recommended_display_range": [0.0, 3.0],
+    "recommended_threshold": 1.0,
+    "color_stops": [
+        {"value": 0.0, "color": "#006400"},
+        {"value": 0.75, "color": "#4CAF50"},
+        {"value": 1.5, "color": "#FFD54F"},
+        {"value": 2.25, "color": "#FF9800"},
+        {"value": 3.0, "color": "#C62828"}
+    ]
+}

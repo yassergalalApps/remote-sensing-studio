@@ -1,0 +1,80 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "NDBaI",
+    "metadata": {
+        "display_name": "Normalized Difference Bareness Index",
+        "scientific_name": "NDBaI",
+        "category": "bare_soil",
+        "description": "Directly discriminates bare earth and fallow fields from agricultural crops and urban infrastructure utilizing thermal infrared emissions.",
+        "units": "Index",
+        "order": 6,
+        "scientific_reference": "Zhao, H.-M., & Chen, X.-L. (2005). Use of normalized difference bareness index in quickly mapping bare land from TM/ETM+. Journal of Wuhan Technical University of Surveying and Mapping, 30(4), 302-306."
+    },
+    "workspace": "urban",
+    "formula": {
+        "engine": "expression",
+        "expression": "(SWIR1 - TIR) / (SWIR1 + TIR)",
+        "required_bands": [
+            "SWIR1",
+            "TIR"
+        ],
+        "parameters": {},
+        "reference": "Zhao, H.-M., & Chen, X.-L. (2005). Use of normalized difference bareness index in quickly mapping bare land from TM/ETM+. Journal of Wuhan Technical University of Surveying and Mapping, 30(4), 302-306."
+    },
+    "default_parameters": {
+        "threshold": 0.0
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "Bare Soil",
+        "minimum": -1.0,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "bare_soil"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Bareness / Fallow Land",
+        "negative_class": "Non-Bare Surface"
+    },
+    "supported_satellites": [
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "hybrid",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "availability": {
+        "supported": false,
+        "reason": "Formula/unit incompatibility with current Level-2 canonical inputs"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [],
+        "output_validity": {
+            "enabled": false
+        }
+    }
+}

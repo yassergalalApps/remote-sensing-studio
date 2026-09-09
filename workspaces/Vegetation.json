@@ -1,0 +1,11 @@
+{
+    "schema_version": 1,
+    "id": "Vegetation",
+    "display_name": "Vegetation Indices",
+    "description": "Spectral indices focusing on plant health, vigor, and density.",
+    "icon": "vegetation_icon",
+    "color": "#4CAF50",
+    "sorting_order": 1,
+    "documentation": "Analyze vegetation health.",
+    "default_visualization": "continuous"
+}

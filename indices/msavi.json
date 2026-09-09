@@ -1,0 +1,88 @@
+{
+    "schema_version": 1,
+    "engine_version": 1,
+    "minimum_plugin_version": "1.0",
+    "id": "MSAVI",
+    "metadata": {
+        "display_name": "Modified Soil Adjusted Vegetation Index",
+        "scientific_name": "MSAVI",
+        "category": "Spectral Index",
+        "description": "Vegetation index that minimizes the effect of bare soil without requiring an empirically derived soil line.",
+        "units": "Index",
+        "order": 4
+    },
+    "workspace": "vegetation",
+    "formula": {
+        "engine": "expression",
+        "expression": "(2 * NIR + 1 - ((2 * NIR + 1)**2 - 8 * (NIR - RED)) ** 0.5) / 2",
+        "required_bands": [
+            "NIR",
+            "RED"
+        ],
+        "expected_input": "reflectance",
+        "expected_output_range": [
+            -1.0,
+            1.0
+        ],
+        "recommended_threshold": 0.2,
+        "reference": "Qi et al., 1994"
+    },
+    "default_parameters": {
+        "threshold": 0.2
+    },
+    "visualization": {
+        "renderer": "continuous",
+        "palette": "RdYlGn",
+        "minimum": -0.2,
+        "maximum": 1.0,
+        "nodata": "transparent",
+        "renderer_family": "vegetation"
+    },
+    "classification": {
+        "mode": "continuous"
+    },
+    "capabilities": {
+        "statistics": true,
+        "histogram": true,
+        "classification": true,
+        "area": true,
+        "timeseries": false,
+        "change_detection": false,
+        "export": true,
+        "renderer": true
+    },
+    "report": {
+        "positive_class": "Vegetation",
+        "negative_class": "Soil/Water"
+    },
+    "supported_satellites": [
+        "Sentinel-2",
+        "Landsat-8",
+        "Landsat-9"
+    ],
+    "input_semantics": {
+        "domain": "optical",
+        "unit": "reflectance",
+        "representation": "physical"
+    },
+    "safety": {
+        "input_validity": {
+            "optical_min": 0.0,
+            "thermal_min": null
+        },
+        "base_denominators": [],
+        "derived_terms": [],
+        "complex_denominators": [],
+        "sqrt_domains": [
+            {
+                "expression": "(2 * NIR + 1)**2 - 8 * (NIR - RED)",
+                "min_valid": 0.0
+            }
+        ],
+        "output_validity": {
+            "enabled": true,
+            "min": -1.0,
+            "max": 1.0
+        }
+    }
+}
