@@ -172,40 +172,6 @@ class AnalysisWizardDialog(QDialog):
         # Set a reasonable default dialog height that safely fits within a 720px screen constraint
         self.resize(900, 660)
         
-        # --- VERIFICATION DIAGNOSTIC ---
-        def verify_fix():
-            try:
-                out = []
-                def fmt(r): return f"{r.x()},{r.y()},{r.width()},{r.height()}" if r else "None"
-                def fsz(s): return f"{s.width()}x{s.height()}" if s else "None"
-                
-                out.append("=== POST-FIX GEOMETRY VERIFICATION ===")
-                out.append(f"A. pageScene minHint: {fsz(self.pageScene.minimumSizeHint())}")
-                out.append(f"B. stackedWidget minHint: {fsz(self.stackedWidget.minimumSizeHint())}")
-                out.append(f"C. mainLayout minSize: {fsz(self.layout().minimumSize())}")
-                out.append(f"D. dialog minSize: {fsz(self.minimumSize())}")
-                out.append(f"E. dialog actual geometry: {fmt(self.geometry())}")
-                out.append(f"F. dialog frame bottom: {self.frameGeometry().bottom()}")
-                
-                bf = getattr(self, 'buttonFrame', None)
-                if bf:
-                    out.append(f"G. buttonFrame GEOM: {fmt(bf.geometry())}")
-                    out.append(f"H. buttonFrame bottom: {bf.geometry().bottom()}")
-                    
-                from PyQt6 import QtGui
-                screen = QtGui.QGuiApplication.primaryScreen()
-                out.append(f"I. screen available: {fmt(screen.availableGeometry()) if screen else 'None'}")
-                
-                import os
-                log_path = os.path.join(os.path.dirname(__file__), 'geometry_diagnostic_4.txt')
-                with open(log_path, 'w') as f:
-                    f.write("\n".join(out))
-            except Exception as e:
-                pass
-                    
-        self.verify_fix = verify_fix
-        from PyQt6.QtCore import QTimer
-        QTimer.singleShot(200, self.verify_fix)
         # -----------------------------
             
         self.stackedWidget.setCurrentWidget(self.pageConfig)

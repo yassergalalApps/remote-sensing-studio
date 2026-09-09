@@ -4,22 +4,12 @@ import logging
 
 def write_evi_diagnostic(message: str):
     """
-    1. always attempt direct file writing,
-    2. optionally also call logger.info(),
-    3. never allow logging failure to interrupt EVI computation.
+    1. Only use standard python logging in production.
+    2. Never allow logging failure to interrupt EVI computation.
     """
     try:
-        log_dir = Path(__file__).parent.parent / "logs"
-        log_dir.mkdir(exist_ok=True)
-        diag_path = log_dir / "evi_diagnostic.txt"
-        with open(diag_path, "a", encoding="utf-8") as f:
-            f.write(message + "\n")
-    except Exception:
-        pass
-        
-    try:
         logger = logging.getLogger("RemoteSensingStudio")
-        logger.info(message)
+        logger.debug(message)
     except Exception:
         pass
 

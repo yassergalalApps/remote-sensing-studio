@@ -23,3 +23,9 @@ bak_ext_libs/
 test_versions.py
 test_webp.py
 qthread_test.py
+
+# Ignore runtime diagnostic output files
+*diagnostic*.txt
+*_diagnostic.txt
+logs/
+evi_diagnostic.txt

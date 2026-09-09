@@ -33,5 +33,5 @@ import tempfile
 BENCHMARK_HISTORY_FILE = os.path.join(tempfile.gettempdir(), "rss_benchmark_history.json")
 
 # --- Debugging Toggles ---
-EVI_DEBUG = True
+EVI_DEBUG = False
 

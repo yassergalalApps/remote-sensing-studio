@@ -3,18 +3,11 @@ Copyright 2026 Yasser Galal
 
 This software includes the following third-party components bundled in the `ext_libs/` directory, whose licenses are preserved:
 
-- **certifi**: Mozilla Public License 2.0 (MPL 2.0)
-- **cffi**: MIT License
-- **charset-normalizer**: MIT License
 - **google-auth**: Apache License 2.0
 - **google-auth-oauthlib**: Apache License 2.0
-- **idna**: BSD License
 - **oauthlib**: BSD 3-Clause License
 - **pyasn1**: BSD 2-Clause License
 - **pyasn1_modules**: BSD License
-- **pycparser**: BSD 3-Clause License
-- **requests**: Apache License 2.0
 - **requests_oauthlib**: ISC License
-- **urllib3**: MIT License
 
 For exact license texts of these bundled components, please see their respective .dist-info or source folders within `ext_libs/`.
