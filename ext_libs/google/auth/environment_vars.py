@@ -100,8 +100,8 @@ Used to distinguish between GAE gen1 and GAE gen2+.
 # for a Google access tokens via the GCP STS endpoint.
 # When not available the AWS metadata server is used to retrieve these values.
 AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID"
-AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY"
-AWS_SESSION_TOKEN = "AWS_SESSION_TOKEN"
+AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY"  # nosec B105 - Environment variable name, not the secret value.
+AWS_SESSION_TOKEN = "AWS_SESSION_TOKEN"  # nosec B105 - Environment variable name, not the secret value.
 AWS_REGION = "AWS_REGION"
 AWS_DEFAULT_REGION = "AWS_DEFAULT_REGION"
 
@@ -130,7 +130,7 @@ CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH = (
 file. This variable is the fallback of GOOGLE_API_CERTIFICATE_CONFIG."""
 
 GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES = (
-    "GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"
+    "GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"  # nosec B105 - Environment variable name, not the secret value.
 )
 """Environment variable to prevent agent token sharing for GCP services."""
 

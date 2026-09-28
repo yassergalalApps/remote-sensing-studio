@@ -8,6 +8,7 @@ except ImportError:
     from qgis.PyQt.QtGui import QPainter, QColor, QPen, QBrush, QPolygonF, QFont
     from qgis.PyQt.QtCore import Qt, pyqtSignal, QRectF, QPointF
 import numpy as np
+import logging
 
 class HistogramWidget(QWidget):
     """
@@ -65,7 +66,8 @@ class HistogramWidget(QWidget):
         if hasattr(self, 'setToolTip'):
             try:
                 self.setToolTip("")
-            except Exception:
+            except Exception as e:
+                logging.getLogger(__name__).debug(f"[gui/widgets/histogram_widget.py:68] Suppressed exception: {e}")
                 pass
         self.update()
 
@@ -149,9 +151,9 @@ class HistogramWidget(QWidget):
             # Draw Px value annotation tag above pin head
             painter.setPen(QPen(QColor("#FFFFFF"), 1))
             try:
-                from qgis.PyQt.QtGui import QFont
                 painter.setFont(QFont("Inter", 8, QFont.Weight.Bold))
-            except Exception:
+            except Exception as e:
+                logging.getLogger(__name__).debug(f"[gui/widgets/histogram_widget.py:154] Suppressed exception: {e}")
                 pass
             val_text = f"Px: {self._inspected_value:.3f}"
             text_x = max(2.0, min(float(width) - 60.0, float(inspected_x) - 25.0))

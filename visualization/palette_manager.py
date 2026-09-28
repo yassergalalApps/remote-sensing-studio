@@ -103,7 +103,8 @@ class PaletteManager:
             from qgis.core import QgsStyle
             if palette_name in QgsStyle.defaultStyle().colorRampNames():
                 return {"name": palette_name, "type": "continuous", "color_stops": []}
-        except Exception:
+        except Exception as e:
+            logger.debug(f"[visualization/palette_manager.py:106] Suppressed exception: {e}")
             pass
             
         return self.palettes.get("RdYlGn", {})

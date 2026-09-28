@@ -45,12 +45,8 @@ class UrbanRenderer:
         shader = QgsRasterShader()
         color_ramp = QgsColorRampShader()
         
-        try:
-            color_ramp.setColorRampType(QgsColorRampShader.Interpolated)
-            color_ramp.setClassificationMode(QgsColorRampShader.Continuous)
-        except AttributeError:
-            color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
-            color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
+        color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
+        color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
         
         color_ramp.setClip(True)
         color_ramp.setMinimumValue(min_val)

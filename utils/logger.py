@@ -21,7 +21,8 @@ class QgsLogHandler(logging.Handler):
                 QgsMessageLog.logMessage(msg, "RemoteSensingStudio", level)
             else:
                 print(msg)
-        except Exception:
+        except Exception as e:
+            logging.getLogger(__name__).debug(f"[utils/logger.py:24] Suppressed exception: {e}")
             pass
 
 def get_logger(name: str) -> logging.Logger:

@@ -293,7 +293,8 @@ class MapExporter:
                                     elif hasattr(lnode, "setData"):
                                         try:
                                             lnode.setData(new_lbl, 0)
-                                        except Exception:
+                                        except Exception as e:
+                                            self.logger.debug(f"[services/map_exporter.py:296] Suppressed exception: {e}")
                                             pass
                         except Exception as lnode_err:
                             self.logger.debug(f"Could not override child legend node user labels: {lnode_err}")
@@ -366,7 +367,8 @@ class MapExporter:
                 scale_bar.setHeight(3.0)
                 try:
                     scale_bar.setFont(QFont("Inter", 9, QFont.Weight.Normal))
-                except Exception:
+                except Exception as e:
+                    self.logger.debug(f"[services/map_exporter.py:369] Suppressed exception: {e}")
                     pass
                 
                 if hasattr(scale_bar, "applyDefaultRenderer"):

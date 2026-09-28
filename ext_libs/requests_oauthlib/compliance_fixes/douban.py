@@ -9,7 +9,7 @@ def douban_compliance_fix(session):
         r._content = fixed_token.encode()
         return r
 
-    session._client_default_token_placement = "query"
+    session._client_default_token_placement = "query"  # nosec B105 - Configuration string for token placement, not a credential.
     session.register_compliance_hook("access_token_response", fix_token_type)
 
     return session

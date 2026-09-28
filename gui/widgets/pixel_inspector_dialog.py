@@ -4,6 +4,7 @@ Provides a modern, stays-on-top analytical tool panel that displays comprehensiv
 spectral inspection results in real time as the user clicks across the QGIS map canvas.
 """
 from typing import Dict, Any, Optional
+import logging
 
 try:
     from PyQt6.QtCore import Qt, pyqtSignal
@@ -289,7 +290,8 @@ class PixelInspectorDialog(QDialog):
             text = json.dumps(self._current_data_cache, indent=2, default=str)
             if clipboard:
                 clipboard.setText(text)
-        except Exception:
+        except Exception as e:
+            logging.getLogger(__name__).debug(f"[gui/widgets/pixel_inspector_dialog.py:292] Suppressed exception: {e}")
             pass
 
     def _on_close_clicked(self) -> None:

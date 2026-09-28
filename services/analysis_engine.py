@@ -79,7 +79,8 @@ class AnalysisEngine(QObject):
                 write_evi_diagnostic("===== FORMULA REGISTRY RUNTIME OUTPUT =====")
                 write_evi_diagnostic(f"formula_keys = {list(formula.keys())}")
                 write_evi_diagnostic(f"formula_id = {formula.get('id')}")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[services/analysis_engine.py:82] Suppressed exception: {e}")
                 pass
             
             # 2. Determine Provider
@@ -263,7 +264,6 @@ class AnalysisEngine(QObject):
                 
                 # Fallback if to_dict doesn't exist but we can read it from the JSON directly
                 import json
-                import os
                 try:
                     base_dir = os.path.dirname(os.path.dirname(__file__))
                     json_path = os.path.join(base_dir, "indices", f"{analysis_type.lower()}.json")
@@ -381,9 +381,8 @@ class AnalysisEngine(QObject):
         import time
         import datetime
         import tempfile
-        import os
         import json
-        
+
         try:
             from osgeo import gdal, ogr, osr
             import numpy as np
@@ -822,7 +821,8 @@ class AnalysisEngine(QObject):
         if temp_geojson_path and os.path.exists(temp_geojson_path):
             try:
                 os.remove(temp_geojson_path)
-            except:
+            except Exception as e:
+                self.logger.debug(f"[services/analysis_engine.py:825] Suppressed exception: {e}")
                 pass
             
         # Build AnalysisResult
@@ -952,23 +952,7 @@ class AnalysisEngine(QObject):
             export_resolution_mode = context.export_settings.get("resolution_mode", "Custom")
             export_resolution = context.export_settings.get("resolution", 10.0)
             scale = export_resolution if export_resolution_mode == "Custom" else (10.0 if 'Sentinel' in context.satellite_definition['satellite_id'] else 30.0)
-            
-            # --- TEMPORARY DIAGNOSTIC INJECTION ---
-            try:
-                from ..utils.diagnostic_logger import run_savi_diagnostics
-                run_savi_diagnostics(
-                    base_img=img_data[0], 
-                    computed_img=computed_img, 
-                    context=context, 
-                    scale=scale, 
-                    geom=geom, 
-                    collection_metrics=collection_metrics, 
-                    sat_info=sat_info
-                )
-            except Exception as diag_e:
-                self.logger.error(f"SAVI Diagnostics failed: {diag_e}")
-            # --- END TEMPORARY DIAGNOSTIC INJECTION ---
-            
+
             stats = AnalysisMetricsBuilder.compute_image_statistics(computed_img, geom, scale)
             scientific_name = context.index_definition["metadata"]["scientific_name"]
             formatted_stats = AnalysisMetricsBuilder.format_statistics(stats, scientific_name)

@@ -10,7 +10,7 @@ def ebay_compliance_fix(session):
         # https://developer.ebay.com/api-docs/static/oauth-auth-code-grant-request.html
         # Modify these to be "Bearer".
         if token.get("token_type") in ["Application Access Token", "User Access Token"]:
-            token["token_type"] = "Bearer"
+            token["token_type"] = "Bearer"  # nosec B105 - Fixed OAuth authorization scheme, not a credential.
             fixed_token = json.dumps(token)
             response._content = fixed_token.encode()
 

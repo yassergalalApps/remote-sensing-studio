@@ -19,7 +19,7 @@ def facebook_compliance_fix(session):
         expires = token.get("expires")
         if expires is not None:
             token["expires_in"] = expires
-        token["token_type"] = "Bearer"
+        token["token_type"] = "Bearer"  # nosec B105 - Fixed OAuth authorization scheme, not a credential.
         r._content = dumps(token).encode()
         return r
 

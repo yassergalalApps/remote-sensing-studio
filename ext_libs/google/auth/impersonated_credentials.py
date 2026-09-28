@@ -53,7 +53,7 @@ _REFRESH_ERROR = "Unable to acquire impersonated credentials"
 
 _DEFAULT_TOKEN_LIFETIME_SECS = 3600  # 1 hour in seconds
 
-_GOOGLE_OAUTH2_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"
+_GOOGLE_OAUTH2_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"  # nosec B105 - Default API URL, not a credential.
 
 
 _SOURCE_CREDENTIAL_AUTHORIZED_USER_TYPE = "authorized_user"

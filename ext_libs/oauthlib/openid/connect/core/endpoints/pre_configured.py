@@ -132,7 +132,7 @@ class Server(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer, "JWT": self.jwt}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer, "JWT": self.jwt}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(self, request_validator)
         IntrospectEndpoint.__init__(self, request_validator)

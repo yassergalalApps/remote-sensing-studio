@@ -10,7 +10,8 @@ def write_evi_diagnostic(message: str):
     try:
         logger = logging.getLogger("RemoteSensingStudio")
         logger.debug(message)
-    except Exception:
+    except Exception as e:
+        logging.getLogger(__name__).debug(f"[analysis/diagnostic_utils.py:13] Suppressed exception: {e}")
         pass
 
 def normalize_scalar(val, default=0):

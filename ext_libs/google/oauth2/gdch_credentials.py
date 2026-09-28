@@ -25,9 +25,9 @@ from google.auth import jwt
 from google.oauth2 import _client
 
 
-TOKEN_EXCHANGE_TYPE = "urn:ietf:params:oauth:token-type:token-exchange"
-ACCESS_TOKEN_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"
-SERVICE_ACCOUNT_TOKEN_TYPE = "urn:k8s:params:oauth:token-type:serviceaccount"
+TOKEN_EXCHANGE_TYPE = "urn:ietf:params:oauth:token-type:token-exchange"  # nosec B105 - OAuth token type identifier, not a credential.
+ACCESS_TOKEN_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"  # nosec B105 - OAuth token type identifier, not a credential.
+SERVICE_ACCOUNT_TOKEN_TYPE = "urn:k8s:params:oauth:token-type:serviceaccount"  # nosec B105 - OAuth token type identifier, not a credential.
 JWT_LIFETIME = datetime.timedelta(seconds=3600)  # 1 hour
 
 

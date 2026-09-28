@@ -3,6 +3,7 @@ Google Earth Engine Provider Module.
 """
 import logging
 import datetime
+import traceback
 import urllib.parse
 from typing import Any, Dict, Tuple, List, Union
 from ..utils.logger import get_logger
@@ -266,7 +267,8 @@ class GEEProvider(ProviderInterface):
                 with open(CREDENTIALS_FILE, 'r') as f:
                     local_data = json.load(f)
                     local_proj = local_data.get('project')
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[providers/gee_provider.py:269] Suppressed exception: {e}")
                 pass
         if local_proj:
             _test_project(local_proj, "Local EE Config")
@@ -316,7 +318,8 @@ class GEEProvider(ProviderInterface):
         if self.is_connected and self.current_project:
             try:
                 ee.Initialize(credentials=creds, project=self.current_project)
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[providers/gee_provider.py:319] Suppressed exception: {e}")
                 pass
                 
         return [], "PROJECT_DISCOVERY_UNAVAILABLE"
@@ -371,7 +374,8 @@ class GEEProvider(ProviderInterface):
                 email = QgsSettings().value("earth_engine/current_account_email", "")
                 if isinstance(email, str) and email:
                     return email
-            except Exception:
+            except Exception as e:
+                logging.getLogger(__name__).debug(f"[providers/gee_provider.py:374] Suppressed exception: {e}")
                 pass
             return ""
             
@@ -395,7 +399,7 @@ class GEEProvider(ProviderInterface):
             
         try:
             import requests
-            res = requests.get(f"https://oauth2.googleapis.com/tokeninfo?access_token={creds.token}")
+            res = requests.get(f"https://oauth2.googleapis.com/tokeninfo?access_token={creds.token}", timeout=10)
             if res.status_code == 200:
                 data = res.json()
                 email = data.get('email', '')
@@ -405,7 +409,8 @@ class GEEProvider(ProviderInterface):
                     try:
                         from qgis.core import QgsSettings
                         QgsSettings().setValue("earth_engine/current_account_email", email)
-                    except Exception:
+                    except Exception as e:
+                        self.logger.debug(f"[providers/gee_provider.py:408] Suppressed exception: {e}")
                         pass
                     return email
             self.logger.warning(f"[AUTH DEBUG] Failed to resolve email from tokeninfo: {res.text}")
@@ -484,7 +489,8 @@ class GEEProvider(ProviderInterface):
             try:
                 from qgis.core import QgsSettings
                 QgsSettings().remove("earth_engine/current_account_email")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[providers/gee_provider.py:487] Suppressed exception: {e}")
                 pass
             return True, "Successfully logged out."
         except Exception as e:
@@ -530,7 +536,6 @@ class GEEProvider(ProviderInterface):
         try:
             geom = ee.Geometry(aoi_geojson).buffer(distance=0, maxError=1)
         except Exception as e:
-            import json
             def get_depth(L):
                 return isinstance(L, list) and max(map(get_depth, L), default=0) + 1 or 0
                 
@@ -910,7 +915,6 @@ class GEEProvider(ProviderInterface):
         
         # --- EVI DIAGNOSTIC INJECTION ---
         import sys
-        import os
         from ..config import EVI_DEBUG
         from ..analysis.diagnostic_utils import write_evi_diagnostic
         
@@ -945,7 +949,8 @@ class GEEProvider(ProviderInterface):
             write_evi_diagnostic(f"normalized_mode = {normalized_mode}")
             write_evi_diagnostic(f"single_scene_match = {normalized_mode in SINGLE_SCENE_MODES}")
             write_evi_diagnostic(f"is_evi = {formula.get('id') == 'EVI'}")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[providers/gee_provider.py:948] Suppressed exception: {e}")
             pass
 
         if debug_mode and formula.get("id") == "EVI" and normalized_mode in SINGLE_SCENE_MODES:
@@ -959,7 +964,6 @@ class GEEProvider(ProviderInterface):
                 EVIDiagnosticRunner.run_evi_denominator_diagnostic(test_img, geom, native_res, formula, sat_info, clipped_img)
                 write_evi_diagnostic("===== EVI DIAGNOSTIC RUNNER RETURNED =====")
             except Exception as e:
-                import traceback
                 write_evi_diagnostic(f"===== RUNNER FAILED: {e} =====")
                 write_evi_diagnostic(traceback.format_exc())
                 self.logger.error(f"EVI Diagnostic Runner failed: {e}")
@@ -1103,7 +1107,8 @@ class GEEProvider(ProviderInterface):
                 if hasattr(e, 'read'):
                     try:
                         resp_body = e.read().decode('utf-8')
-                    except:
+                    except Exception as read_err:
+                        self.logger.debug(f"[providers/gee_provider.py:1106] Suppressed exception: {read_err}")
                         pass
                 elif hasattr(e, 'response'):
                     resp_body = str(e.response)
@@ -1125,7 +1130,8 @@ class GEEProvider(ProviderInterface):
                     try:
                         parsed = json.loads(resp_body)
                         self.logger.info(f"[DIAGNOSTIC] Complete JSON:\n{json.dumps(parsed, indent=2)}")
-                    except:
+                    except Exception as parse_err:
+                        self.logger.debug(f"[providers/gee_provider.py:1128] Suppressed exception: {parse_err}")
                         pass
             except Exception as diag_e:
                 self.logger.error(f"[DIAGNOSTIC] Failed to log EE Exception diagnostics: {diag_e}")

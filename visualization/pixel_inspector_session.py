@@ -151,10 +151,14 @@ class PixelInspectorSession(QObject):
             from .pixel_inspector import PixelInspectorTool
             if self.tool and hasattr(self.tool, "request_deactivation"):
                 try: self.tool.request_deactivation.disconnect(self.close)
-                except Exception: pass
+                except Exception as e:
+                    logger.debug(f"[visualization/pixel_inspector_session.py:154] Suppressed exception: {e}")
+                    pass
                 if hasattr(self.tool, "pixel_inspected"):
                     try: self.tool.pixel_inspected.disconnect(self.inspect)
-                    except Exception: pass
+                    except Exception as e:
+                        logger.debug(f"[visualization/pixel_inspector_session.py:157] Suppressed exception: {e}")
+                        pass
             
             self.tool = PixelInspectorTool(self.canvas, layer)
             self.tool.set_layer(layer)
@@ -172,7 +176,9 @@ class PixelInspectorSession(QObject):
             self.canvas.setMapTool(self.tool)
             if hasattr(self.canvas, "setFocus"):
                 try: self.canvas.setFocus()
-                except Exception: pass
+                except Exception as e:
+                    logger.debug(f"[visualization/pixel_inspector_session.py:175] Suppressed exception: {e}")
+                    pass
         except Exception as err:
             logger.error(f"Failed to set map tool on canvas: {err}", exc_info=True)
             raise
@@ -275,7 +281,8 @@ class PixelInspectorSession(QObject):
                 msg = f"<b>{formula} Index:</b> {val:.4f} | <b>Class:</b> {status} | <b>Map Coordinates:</b> X: {coord_x:.2f}, Y: {coord_y:.2f}"
                 if Qgis:
                     self.iface.messageBar().pushMessage("Pixel Inspection", msg, level=Qgis.MessageLevel.Success, duration=5)
-            except Exception:
+            except Exception as e:
+                logger.debug(f"[visualization/pixel_inspector_session.py:278] Suppressed exception: {e}")
                 pass
 
     def clear(self) -> None:
@@ -364,17 +371,26 @@ class PixelInspectorSession(QObject):
                 proj = QgsProject.instance()
                 if hasattr(proj, "readProject"):
                     try: proj.readProject.disconnect(self.close)
-                    except Exception: pass
+                    except Exception as e:
+                        logger.debug(f"[visualization/pixel_inspector_session.py:367] Suppressed exception: {e}")
+                        pass
                 if hasattr(proj, "cleared"):
                     try: proj.cleared.disconnect(self.close)
-                    except Exception: pass
+                    except Exception as e:
+                        logger.debug(f"[visualization/pixel_inspector_session.py:370] Suppressed exception: {e}")
+                        pass
                 if hasattr(proj, "projectClosed"):
                     try: proj.projectClosed.disconnect(self.close)
-                    except Exception: pass
+                    except Exception as e:
+                        logger.debug(f"[visualization/pixel_inspector_session.py:373] Suppressed exception: {e}")
+                        pass
                 if hasattr(proj, "layersRemoved"):
                     try: proj.layersRemoved.disconnect(self._on_layers_removed)
-                    except Exception: pass
-            except Exception:
+                    except Exception as e:
+                        logger.debug(f"[visualization/pixel_inspector_session.py:376] Suppressed exception: {e}")
+                        pass
+            except Exception as e:
+                logger.debug(f"[visualization/pixel_inspector_session.py:377] Suppressed exception: {e}")
                 pass
         self.tool = None
         self.dialog = None

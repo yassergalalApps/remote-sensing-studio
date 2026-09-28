@@ -68,7 +68,8 @@ class RasterValidator:
             logger.info(f"Valid-data (non-nodata) NaN pixels: {nan_count}")
             logger.info(f"Valid-data (non-nodata) Inf pixels: {inf_count}")
             logger.info("====================================")
-        except Exception:
+        except Exception as e:
+            logging.getLogger(__name__).debug(f"[analysis/raster_validator.py:71] Suppressed exception: {e}")
             pass
         # ------------------------------
 

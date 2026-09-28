@@ -3,6 +3,7 @@ General Helper Functions Module.
 """
 
 import json
+import logging
 
 try:
     from qgis.core import (
@@ -28,7 +29,6 @@ def normalize_and_validate_geometry(geom, source_crs):
     import logging
     logger = logging.getLogger(__name__)
     try:
-        from qgis.core import QgsWkbTypes
         logger.info("==================================================")
         logger.info("[DIAGNOSTIC]")
         logger.info("==================================================")
@@ -260,7 +260,8 @@ def apply_scrollbar_style(widget):
     try:
         current = widget.styleSheet() or ""
         widget.setStyleSheet(current + style)
-    except Exception:
+    except Exception as e:
+        logging.getLogger(__name__).debug(f"[utils/helpers.py:263] Suppressed exception: {e}")
         pass
 
 def apply_custom_radio_style(widgets, accent_color="#10B981", hover_color="#14C8A0"):
@@ -296,7 +297,8 @@ def apply_custom_radio_style(widgets, accent_color="#10B981", hover_color="#14C8
             try:
                 current = widget.styleSheet() or ""
                 widget.setStyleSheet(current + style)
-            except Exception:
+            except Exception as e:
+                logging.getLogger(__name__).debug(f"[utils/helpers.py:299] Suppressed exception: {e}")
                 pass
 
 def apply_custom_checkbox_style(widgets, accent_color="#10B981", hover_color="#14C8A0"):
@@ -333,6 +335,7 @@ def apply_custom_checkbox_style(widgets, accent_color="#10B981", hover_color="#1
             try:
                 current = widget.styleSheet() or ""
                 widget.setStyleSheet(current + style)
-            except Exception:
+            except Exception as e:
+                logging.getLogger(__name__).debug(f"[utils/helpers.py:336] Suppressed exception: {e}")
                 pass
 

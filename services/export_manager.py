@@ -371,7 +371,6 @@ class ExportManager:
                     
             # Remove any associated stale .aux.xml statistics file
             aux_file = output_path + ".aux.xml"
-            import os
             if os.path.exists(aux_file):
                 try:
                     os.remove(aux_file)

@@ -49,10 +49,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 # The Google OAuth 2.0 token endpoint. Used for authorized user credentials.
-_GOOGLE_OAUTH2_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"
+_GOOGLE_OAUTH2_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"  # nosec B105 - Default API URL, not a credential.
 
 # The Google OAuth 2.0 token info endpoint. Used for getting token info JSON from access tokens.
-_GOOGLE_OAUTH2_TOKEN_INFO_ENDPOINT = "https://oauth2.googleapis.com/tokeninfo"
+_GOOGLE_OAUTH2_TOKEN_INFO_ENDPOINT = "https://oauth2.googleapis.com/tokeninfo"  # nosec B105 - Default API URL, not a credential.
 
 
 class Credentials(

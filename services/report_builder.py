@@ -54,11 +54,8 @@ class ReportBuilder:
                 return success
             else:
                 # Basic direct HTML printing if only string supplied
-                try:
-                    from PyQt6.QtGui import QPdfWriter, QTextDocument
-                except ImportError:
-                    from PyQt5.QtGui import QPdfWriter, QTextDocument
-                    
+                from qgis.PyQt.QtGui import QPdfWriter, QTextDocument
+
                 writer = QPdfWriter(output_path)
                 writer.setResolution(300)
                 doc = QTextDocument()

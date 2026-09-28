@@ -219,7 +219,7 @@ class AnalysisWizardDialog(QDialog):
         is_single_polygon = False
         has_selected_features = False
         
-        if layer and layer.type() == QgsMapLayerType.VectorLayer and layer.geometryType() == QgsWkbTypes.PolygonGeometry:
+        if layer and layer.type() == QgsMapLayerType.VectorLayer and layer.geometryType() == QgsWkbTypes.GeometryType.PolygonGeometry:
             has_polygon_layer = True
             if layer.featureCount() == 1:
                 is_single_polygon = True
@@ -428,7 +428,8 @@ class AnalysisWizardDialog(QDialog):
                         if item.widget() == self.cmbOutputMode and i > 0:
                             prev = layout.itemAt(i-1).widget()
                             if prev: prev.setVisible(False)
-                except Exception:
+                except Exception as e:
+                    self.logger.debug(f"[gui/analysis_wizard.py:431] Suppressed exception: {e}")
                     pass
             
         # Connect signals for live preview updates
@@ -642,7 +643,7 @@ class AnalysisWizardDialog(QDialog):
                 try:
                     geom, crs = helpers.get_vector_file_geometry(path)
                     self._process_geometry(geom, crs)
-                except:
+                except Exception as e:
                     self.current_aoi_geojson = None
                     self.lblAoiSummary.setText("<i>Pending AOI Configuration...</i>")
             elif not path:
@@ -670,7 +671,7 @@ class AnalysisWizardDialog(QDialog):
             
             self.clear_highlight()
             if self.iface:
-                self.highlight_band = QgsRubberBand(self.iface.mapCanvas(), QgsWkbTypes.PolygonGeometry)
+                self.highlight_band = QgsRubberBand(self.iface.mapCanvas(), QgsWkbTypes.GeometryType.PolygonGeometry)
                 self.highlight_band.setColor(QColor(234, 179, 8, 120))
                 self.highlight_band.setWidth(3)
                 
@@ -732,8 +733,9 @@ class AnalysisWizardDialog(QDialog):
     def on_geometry_captured(self, geom):
         try:
             from qgis.core import QgsMessageLog, Qgis
-            QgsMessageLog.logMessage("GEE Wizard: on_geometry_captured executing.", "RemoteSensingStudio", Qgis.Info)
-        except:
+            QgsMessageLog.logMessage("GEE Wizard: on_geometry_captured executing.", "RemoteSensingStudio", Qgis.MessageLevel.Info)
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:736] Suppressed exception: {e}")
             pass
         self._restore_from_drawing()
         canvas_crs = self.iface.mapCanvas().mapSettings().destinationCrs()
@@ -742,8 +744,9 @@ class AnalysisWizardDialog(QDialog):
     def on_drawing_canceled(self):
         try:
             from qgis.core import QgsMessageLog, Qgis
-            QgsMessageLog.logMessage("GEE Wizard: on_drawing_canceled executing.", "RemoteSensingStudio", Qgis.Info)
-        except:
+            QgsMessageLog.logMessage("GEE Wizard: on_drawing_canceled executing.", "RemoteSensingStudio", Qgis.MessageLevel.Info)
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:746] Suppressed exception: {e}")
             pass
         self._restore_from_drawing()
         self.lblAoiSummary.setText("<b style='color:red;'>Drawing canceled.</b>")
@@ -751,8 +754,9 @@ class AnalysisWizardDialog(QDialog):
     def _restore_from_drawing(self):
         try:
             from qgis.core import QgsMessageLog, Qgis
-            QgsMessageLog.logMessage("GEE Wizard: _restore_from_drawing executing.", "RemoteSensingStudio", Qgis.Info)
-        except:
+            QgsMessageLog.logMessage("GEE Wizard: _restore_from_drawing executing.", "RemoteSensingStudio", Qgis.MessageLevel.Info)
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:755] Suppressed exception: {e}")
             pass
             
         # 1. Restore previous QGIS map tool
@@ -775,8 +779,9 @@ class AnalysisWizardDialog(QDialog):
         
         try:
             from qgis.core import QgsMessageLog, Qgis
-            QgsMessageLog.logMessage("GEE Wizard: _restore_from_drawing finished.", "RemoteSensingStudio", Qgis.Info)
-        except:
+            QgsMessageLog.logMessage("GEE Wizard: _restore_from_drawing finished.", "RemoteSensingStudio", Qgis.MessageLevel.Info)
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:779] Suppressed exception: {e}")
             pass
 
     def extract_aoi(self, silent=False) -> bool:
@@ -848,17 +853,20 @@ class AnalysisWizardDialog(QDialog):
         if hasattr(self, 'worker') and self.worker:
             try:
                 self.worker.worker_completed.disconnect(self.on_engine_completed)
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/analysis_wizard.py:851] Suppressed exception: {e}")
                 pass
                 
         if hasattr(self, 'analysis_engine') and self.analysis_engine:
             try:
                 self.analysis_engine.progress_update.disconnect(self.on_engine_progress)
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/analysis_wizard.py:857] Suppressed exception: {e}")
                 pass
             try:
                 self.analysis_engine.export_task_file_requested.disconnect(self.on_export_task_file_requested)
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/analysis_wizard.py:861] Suppressed exception: {e}")
                 pass
 
     def closeEvent(self, event):
@@ -1104,8 +1112,11 @@ class AnalysisWizardDialog(QDialog):
         url = data.get("Preview URL")
         if url and url != "local":
             try:
-                import urllib.request
-                img_data = urllib.request.urlopen(url).read()
+                # URL is a GEE-issued preview/thumbnail URL from our own API response,
+                # not external user input; scheme check is defense-in-depth. nosec B310
+                if not url.startswith(("http://", "https://")):
+                    raise ValueError(f"Refusing to open non-http(s) URL: {url!r}")
+                img_data = urllib.request.urlopen(url).read()  # nosec B310
                 image = QImage()
                 image.loadFromData(img_data)
                 self.lblThumbnail.setPixmap(QPixmap(image).scaled(
@@ -1334,7 +1345,9 @@ class AnalysisWizardDialog(QDialog):
         
         # Disconnect old clicked signal and connect to cancel
         try: self.btnDownloadScene.clicked.disconnect()
-        except Exception: pass
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:1337] Suppressed exception: {e}")
+            pass
         self.btnDownloadScene.clicked.connect(self.cancel_download_task)
         
         QgsApplication.taskManager().addTask(self.export_task)
@@ -1347,7 +1360,9 @@ class AnalysisWizardDialog(QDialog):
             
         self.btnDownloadScene.setText("Download Scene")
         try: self.btnDownloadScene.clicked.disconnect()
-        except Exception: pass
+        except Exception as e:
+            self.logger.debug(f"[gui/analysis_wizard.py:1350] Suppressed exception: {e}")
+            pass
         self.btnDownloadScene.clicked.connect(self.on_download_scene_clicked)
         
     def start_drive_export(self, satellite, selection_mode, image_ids):

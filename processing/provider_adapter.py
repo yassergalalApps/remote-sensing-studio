@@ -110,7 +110,7 @@ class ProviderAdapter:
                 try:
                     digits = ''.join(filter(str.isdigit, provider_name_val))
                     band_idx = int(digits) if digits else 1
-                except:
+                except Exception as e:
                     band_idx = 1
                     
                 entry = QgsRasterCalculatorEntry()

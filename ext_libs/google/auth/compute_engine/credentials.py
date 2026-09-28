@@ -307,7 +307,7 @@ class Credentials(
 
 
 _DEFAULT_TOKEN_LIFETIME_SECS = 3600  # 1 hour in seconds
-_DEFAULT_TOKEN_URI = "https://www.googleapis.com/oauth2/v4/token"
+_DEFAULT_TOKEN_URI = "https://www.googleapis.com/oauth2/v4/token"  # nosec B105 - Default API URL, not a credential.
 
 
 class IDTokenCredentials(

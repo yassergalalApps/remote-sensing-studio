@@ -87,14 +87,16 @@ class RemoteSensingStudioPlugin:
                 try:
                     from .utils.timing_profiler import TimingProfiler
                     TimingProfiler.get_instance().record("T2", "remote_sensing_studio.run() resumes")
-                except Exception:
+                except Exception as e:
+                    self.logger.debug(f"[remote_sensing_studio.py:90] Suppressed exception: {e}")
                     pass
                 
                 if not self.main_dialog:
                     try:
                         from .utils.timing_profiler import TimingProfiler
                         TimingProfiler.get_instance().record("T3", "MainDialog construction starts")
-                    except Exception:
+                    except Exception as e:
+                        self.logger.debug(f"[remote_sensing_studio.py:97] Suppressed exception: {e}")
                         pass
                     self.main_dialog = MainDialog(self.iface, self.iface.mainWindow())
                 else:
@@ -108,7 +110,8 @@ class RemoteSensingStudioPlugin:
                 try:
                     from .utils.timing_profiler import TimingProfiler
                     TimingProfiler.get_instance().record("T10", "MainDialog.show() called")
-                except Exception:
+                except Exception as e:
+                    self.logger.debug(f"[remote_sensing_studio.py:111] Suppressed exception: {e}")
                     pass
                 self.main_dialog.show()
                 self.main_dialog.raise_()

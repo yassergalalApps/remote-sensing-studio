@@ -37,13 +37,8 @@ class VegetationRenderer:
         shader = QgsRasterShader()
         color_ramp = QgsColorRampShader()
         
-        try:
-            color_ramp.setColorRampType(QgsColorRampShader.Interpolated)
-            color_ramp.setClassificationMode(QgsColorRampShader.Continuous)
-        except AttributeError:
-            # Fallback for older QGIS versions/PyQt5
-            color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
-            color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
+        color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
+        color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
         
         # Ensure pixels outside statistics bounds don't get colored
         color_ramp.setClip(True)

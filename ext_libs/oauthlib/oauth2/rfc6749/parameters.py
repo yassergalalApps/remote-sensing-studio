@@ -171,7 +171,7 @@ def prepare_token_request(grant_type, body='', include_client_id=True, code_veri
     return add_params_to_qs(body, params)
 
 
-def prepare_token_revocation_request(url, token, token_type_hint="access_token",
+def prepare_token_revocation_request(url, token, token_type_hint="access_token",  # nosec B107 - Upstream protocol/library default, not a real password.
         callback=None, body='', **kwargs):
     """Prepare a token revocation request.
 

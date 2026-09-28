@@ -7,6 +7,7 @@ from PyQt6 import uic
 
 from .login_dialog import LoginDialog
 from ..services.connection_service import ConnectionService
+import logging
 
 UI_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ui", "welcome_dialog.ui")
 
@@ -113,7 +114,8 @@ class WelcomeDialog(QDialog):
         try:
             from ..utils.timing_profiler import TimingProfiler
             TimingProfiler.get_instance().record("T0", "Continue clicked / on_continue entry")
-        except Exception:
+        except Exception as e:
+            logging.getLogger(__name__).debug(f"[gui/welcome_dialog.py:116] Suppressed exception: {e}")
             pass
 
         if hasattr(self, 'rbGEE') and self.rbGEE.isChecked():
@@ -125,7 +127,8 @@ class WelcomeDialog(QDialog):
                 try:
                     from ..utils.timing_profiler import TimingProfiler
                     TimingProfiler.get_instance().record("T1", "WelcomeDialog.accept() called (Authenticated)")
-                except Exception:
+                except Exception as e:
+                    logging.getLogger(__name__).debug(f"[gui/welcome_dialog.py:128] Suppressed exception: {e}")
                     pass
                 self.accept()
             else:
@@ -136,7 +139,8 @@ class WelcomeDialog(QDialog):
                     try:
                         from ..utils.timing_profiler import TimingProfiler
                         TimingProfiler.get_instance().record("T1", "WelcomeDialog.accept() called (After Login)")
-                    except Exception:
+                    except Exception as e:
+                        logging.getLogger(__name__).debug(f"[gui/welcome_dialog.py:139] Suppressed exception: {e}")
                         pass
                     self.accept()
         else:

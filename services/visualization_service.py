@@ -76,7 +76,6 @@ class VisualizationService(QObject):
 
     def visualize_local_result(self, result: AnalysisResult) -> None:
         """Loads a locally computed GeoTIFF directly into QGIS, skipping all download logic."""
-        import os
         try:
             self._notify_task("Visualization", "Loading local GeoTIFF directly into QGIS...", "success")
             
@@ -138,14 +137,11 @@ class VisualizationService(QObject):
             return VisualizationResult(False, "", layer_name, "", "", "", "", "QGIS core not available.")
             
         from qgis.core import (
-            QgsProject,
-            QgsRasterLayer,
             QgsSingleBandPseudoColorRenderer,
             QgsRasterShader,
             QgsColorRampShader,
             QgsStyle
         )
-        import qgis.utils
         from ..utils.profiler import PerformanceProfiler
         
         profiler = PerformanceProfiler.get_instance()
@@ -173,7 +169,6 @@ class VisualizationService(QObject):
         self.logger.info(f"Provider: {layer.dataProvider().name()}")
         
         # Source path validation
-        import os
         # Normalize paths to handle backslashes vs forward slashes on Windows
         if os.path.normpath(layer.source()) != os.path.normpath(file_path):
             raise ValueError(f"Validation Failed: Layer source path ({layer.source()}) does not match the downloaded TIFF ({file_path}).")
@@ -251,7 +246,7 @@ class VisualizationService(QObject):
             from qgis.core import QgsSingleBandGrayRenderer, QgsContrastEnhancement
             renderer = QgsSingleBandGrayRenderer(provider, 1)
             ce = QgsContrastEnhancement(provider.dataType(1))
-            ce.setContrastEnhancementAlgorithm(QgsContrastEnhancement.StretchToMinimumMaximum)
+            ce.setContrastEnhancementAlgorithm(QgsContrastEnhancement.ContrastEnhancementAlgorithm.StretchToMinimumMaximum)
             ce.setMinimumValue(vis_min)
             ce.setMaximumValue(vis_max)
             renderer.setContrastEnhancement(ce)

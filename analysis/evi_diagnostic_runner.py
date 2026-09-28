@@ -12,7 +12,7 @@ class EVIDiagnosticRunner:
             sat_name = satellite_def.get("satellite_id", "Unknown")
             try:
                 date = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd').getInfo()
-            except:
+            except Exception as e:
                 date = "Unknown"
             
             # Setup bands

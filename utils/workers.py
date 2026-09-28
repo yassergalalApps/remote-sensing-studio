@@ -122,7 +122,7 @@ class DownloadWorker(QThread):
             worker_metrics = {f"Worker {i+1}": {"busy": 0.0, "idle": 0.0} for i in range(num_workers)}
             
             def split_tile_adaptively(tile_id, tile_dict):
-                nonlocal dynamic_split_count, max_recursion_reached, next_tile_id
+                nonlocal dynamic_split_count, max_recursion_reached, next_tile_id, active_items
                 
                 depth = tile_dict.get("depth", 0)
                 if depth >= MAX_TILE_RECURSION:
@@ -242,8 +242,13 @@ class DownloadWorker(QThread):
                                 )
                             else:
                                 current_url = item
+                                # URL is a GEE-issued tile-download URL from our own API
+                                # response, not external user input; scheme check is
+                                # defense-in-depth. nosec B310
+                                if not current_url.startswith(("http://", "https://")):
+                                    raise ValueError(f"Refusing to open non-http(s) URL: {current_url!r}")
                                 req = urllib.request.Request(current_url)
-                                with urllib.request.urlopen(req, timeout=SLOW_TILE_TIMEOUT) as response:
+                                with urllib.request.urlopen(req, timeout=SLOW_TILE_TIMEOUT) as response:  # nosec B310
                                     data = response.read()
                                     with open(file_path, 'wb') as f:
                                         f.write(data)
@@ -319,7 +324,8 @@ class DownloadWorker(QThread):
                             try:
                                 if os.path.exists(file_path):
                                     os.remove(file_path)
-                            except:
+                            except Exception as e:
+                                self.logger.debug(f"[utils/workers.py:322] Suppressed exception: {e}")
                                 pass
                                     
                     with QMutexLocker(mutex):
@@ -383,7 +389,6 @@ class DownloadWorker(QThread):
                 
                 try:
                     import rasterio
-                    import numpy as np
                     with rasterio.open(path) as src:
                         self.logger.info(f"File Size: {os.path.getsize(path)} bytes")
                         self.logger.info(f"Width: {src.width}, Height: {src.height}")
@@ -576,7 +581,6 @@ class DownloadWorker(QThread):
                 try:
                     import rasterio
                     import rasterio.mask
-                    from shapely.geometry import shape
                     from rasterio.features import geometry_mask
                     
                     with rasterio.open(final_file_path) as src:
@@ -768,7 +772,7 @@ class SceneExportTask(QgsTask):
     def __init__(self, gee_provider, satellite: str, start_date: str, end_date: str,
                  aoi_geojson: Dict[str, Any], selection_mode: str, image_ids: list,
                  cloud_filter: float, export_path: str):
-        super().__init__("Downloading Scene", QgsTask.CanCancel)
+        super().__init__("Downloading Scene", QgsTask.Flag.CanCancel)
         self.gee_provider = gee_provider
         self.satellite = satellite
         self.start_date = start_date
@@ -911,7 +915,8 @@ class SceneExportTask(QgsTask):
                 if merged_path != downloaded_paths[0] and os.path.exists(merged_path): os.remove(merged_path)
                 for p in downloaded_paths:
                     if os.path.exists(p): os.remove(p)
-            except:
+            except Exception as e:
+                self.logger.debug(f"[utils/workers.py:914] Suppressed exception: {e}")
                 pass
                 
             self.success = True
@@ -1066,6 +1071,7 @@ class EETaskMonitorWorker(QObject):
                     import logging
                     logging.getLogger(__name__).warning(f"Transient error polling task {t_id}: {e}")
         except Exception as e:
+            self.logger.debug(f"[utils/workers.py:1068] Suppressed exception: {e}")
             pass
 
     @pyqtSlot()
@@ -1092,7 +1098,8 @@ class EEConnectionWorker(QObject):
             # We bypass UI-blocking logic and safely call check_saved_connection
             # Because this is a QThread, ee.Initialize runs outside the GUI thread
             self.connection_service.check_saved_connection()
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[utils/workers.py:1095] Suppressed exception: {e}")
             pass
         finally:
             self._is_running = False

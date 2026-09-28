@@ -61,12 +61,12 @@ _MAX_ACCESS_BOUNDARY_RULES_COUNT = 10
 # The token exchange grant_type used for exchanging credentials.
 _STS_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange"
 # The token exchange requested_token_type. This is always an access_token.
-_STS_REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"
+_STS_REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"  # nosec B105 - OAuth token type identifier, not a credential.
 # The STS token URL used to exchanged a short lived access token for a downscoped one.
-_STS_TOKEN_URL_PATTERN = "https://sts.{}/v1/token"
+_STS_TOKEN_URL_PATTERN = "https://sts.{}/v1/token"  # nosec B105 - Default API URL, not a credential.
 # The subject token type to use when exchanging a short lived access token for a
 # downscoped token.
-_STS_SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"
+_STS_SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"  # nosec B105 - OAuth token type identifier, not a credential.
 
 
 class CredentialAccessBoundary(object):

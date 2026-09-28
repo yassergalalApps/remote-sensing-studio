@@ -309,7 +309,7 @@ class BearerToken(TokenBase):
         token = {
             'access_token': self.token_generator(request),
             'expires_in': expires_in,
-            'token_type': 'Bearer',
+            'token_type': 'Bearer',  # nosec B105 - OAuth authorization scheme, not a credential.
         }
 
         # If provided, include - this is optional in some cases https://tools.ietf.org/html/rfc6749#section-3.3 but

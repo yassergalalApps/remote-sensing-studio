@@ -156,7 +156,7 @@ def get_user_credentials(
             "client_id": client_id,
             "client_secret": client_secret,
             "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
+            "token_uri": "https://oauth2.googleapis.com/token",  # nosec B105 - Default API URL, not a credential.
         }
     }
 

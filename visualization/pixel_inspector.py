@@ -227,7 +227,8 @@ class PixelInspectorTool(QgsMapTool):
                 h = self.layer.dataProvider().ySize()
                 if w > 0: px_size_x = abs(extent.width() / float(w))
                 if h > 0: px_size_y = abs(extent.height() / float(h))
-            except Exception:
+            except Exception as e:
+                logger.debug(f"[visualization/pixel_inspector.py:230] Suppressed exception: {e}")
                 pass
 
         crs_obj = self.layer.crs() if hasattr(self.layer, "crs") else None

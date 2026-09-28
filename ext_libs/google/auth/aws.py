@@ -62,7 +62,7 @@ _AWS_ALGORITHM = "AWS4-HMAC-SHA256"
 # https://docs.aws.amazon.com/general/latest/gr/sigv4-create-string-to-sign.html
 _AWS_REQUEST_TYPE = "aws4_request"
 # The AWS authorization header name for the security session token if available.
-_AWS_SECURITY_TOKEN_HEADER = "x-amz-security-token"
+_AWS_SECURITY_TOKEN_HEADER = "x-amz-security-token"  # nosec B105 - HTTP header name, not a credential.
 # The AWS authorization header name for the auto-generated date.
 _AWS_DATE_HEADER = "x-amz-date"
 # The default AWS regional credential verification URL.
@@ -70,7 +70,7 @@ _DEFAULT_AWS_REGIONAL_CREDENTIAL_VERIFICATION_URL = (
     "https://sts.{region}.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15"
 )
 # IMDSV2 session token lifetime. This is set to a low value because the session token is used immediately.
-_IMDSV2_SESSION_TOKEN_TTL_SECONDS = "300"
+_IMDSV2_SESSION_TOKEN_TTL_SECONDS = "300"  # nosec B105 - TTL configuration value, not a credential.
 
 
 class RequestSigner(object):

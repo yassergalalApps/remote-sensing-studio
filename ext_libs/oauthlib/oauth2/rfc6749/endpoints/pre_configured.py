@@ -87,7 +87,7 @@ class Server(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(self, request_validator)
         IntrospectEndpoint.__init__(self, request_validator)
@@ -140,7 +140,7 @@ class WebApplicationServer(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(self, request_validator)
         IntrospectEndpoint.__init__(self, request_validator)
@@ -183,7 +183,7 @@ class MobileApplicationServer(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(
             self, request_validator, supported_token_types=["access_token"]
@@ -234,7 +234,7 @@ class LegacyApplicationServer(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(self, request_validator)
         IntrospectEndpoint.__init__(self, request_validator)
@@ -277,7 +277,7 @@ class BackendApplicationServer(
             default_token_type=self.bearer,
         )
         ResourceEndpoint.__init__(
-            self, default_token="Bearer", token_types={"Bearer": self.bearer}
+            self, default_token="Bearer", token_types={"Bearer": self.bearer}  # nosec B106 - Upstream protocol/library default, not a real password.
         )
         RevocationEndpoint.__init__(
             self, request_validator, supported_token_types=["access_token"]

@@ -50,9 +50,9 @@ class Client:
     Python, this is usually :py:class:`oauthlib.oauth2.WebApplicationClient`.
 
     """
-    refresh_token_key = 'refresh_token'
+    refresh_token_key = 'refresh_token'  # nosec B105 - Dictionary key name, not a credential.
 
-    def __init__(self, client_id,
+    def __init__(self, client_id,  # nosec B107 - Upstream protocol/library default, not a real password.
                  default_token_placement=AUTH_HEADER,
                  token_type='Bearer',
                  access_token=None,
@@ -319,7 +319,7 @@ class Client:
                                          refresh_token=refresh_token, scope=scope, **kwargs)
         return token_url, FORM_ENC_HEADERS, body
 
-    def prepare_token_revocation_request(self, revocation_url, token,
+    def prepare_token_revocation_request(self, revocation_url, token,  # nosec B107 - Upstream protocol/library default, not a real password.
                                          token_type_hint="access_token", body='', callback=None, **kwargs):
         """Prepare a token revocation request.
 

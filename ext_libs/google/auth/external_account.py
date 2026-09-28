@@ -59,11 +59,11 @@ _EXTERNAL_ACCOUNT_JSON_TYPE = "external_account"
 # The token exchange grant_type used for exchanging credentials.
 _STS_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange"
 # The token exchange requested_token_type. This is always an access_token.
-_STS_REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"
+_STS_REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"  # nosec B105 - OAuth token type identifier, not a credential.
 # Cloud resource manager URL used to retrieve project information.
 _CLOUD_RESOURCE_MANAGER = "https://cloudresourcemanager.{universe_domain}/v1/projects/"
 # Default Google sts token url.
-_DEFAULT_TOKEN_URL = "https://sts.{universe_domain}/v1/token"
+_DEFAULT_TOKEN_URL = "https://sts.{universe_domain}/v1/token"  # nosec B105 - Default API URL, not a credential.
 
 
 @dataclass

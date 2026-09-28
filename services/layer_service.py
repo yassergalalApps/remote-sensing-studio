@@ -52,7 +52,7 @@ class LayerService(QObject):
         
     def _generate_cache_key(self, prefix: str, satellite: str, start_date: str, end_date: str, aoi: Dict[str, Any], extra: str = "") -> str:
         key_string = f"{prefix}_{satellite}_{start_date}_{end_date}_{json.dumps(aoi, sort_keys=True)}_{extra}"
-        return hashlib.md5(key_string.encode('utf-8')).hexdigest()
+        return hashlib.md5(key_string.encode('utf-8'), usedforsecurity=False).hexdigest()
 
     def discover_imagery(self, satellite: str, start_date: str, end_date: str, aoi_geojson: Dict[str, Any]) -> Dict[str, Any]:
         cache_key = self._generate_cache_key("META", satellite, start_date, end_date, aoi_geojson)

@@ -224,7 +224,7 @@ class LocalRasterWizardDialog(QDialog):
             
         from qgis.core import QgsProject, QgsRasterLayer
         layers = QgsProject.instance().mapLayers().values()
-        raster_layers = [l for l in layers if isinstance(l, QgsRasterLayer) and l.isValid()]
+        raster_layers = [layer for layer in layers if isinstance(layer, QgsRasterLayer) and layer.isValid()]
         
         if not raster_layers:
             self.cmbQgisLayer.addItem("No raster layers available in the current QGIS project.", None)
@@ -369,7 +369,8 @@ class LocalRasterWizardDialog(QDialog):
             rec_idx = None
             try:
                 rec_idx = int(rec_band.replace("Band ", "").strip())
-            except:
+            except Exception as e:
+                self.logger.debug(f"[gui/local_raster_wizard.py:372] Suppressed exception: {e}")
                 pass
                 
             if rec_idx and rec_idx <= self.num_raster_bands:
@@ -621,7 +622,7 @@ class LocalRasterWizardDialog(QDialog):
                 try:
                     geom, crs = helpers.get_vector_file_geometry(path)
                     self._process_geometry(geom, crs)
-                except:
+                except Exception as e:
                     self.current_aoi_geojson = None
                     self.lblAoiSummary.setText("<i>Pending AOI Configuration...</i>")
                     self.validate_run_state()
@@ -646,7 +647,7 @@ class LocalRasterWizardDialog(QDialog):
             
             self.clear_highlight()
             if self.iface:
-                self.highlight_band = QgsRubberBand(self.iface.mapCanvas(), QgsWkbTypes.PolygonGeometry)
+                self.highlight_band = QgsRubberBand(self.iface.mapCanvas(), QgsWkbTypes.GeometryType.PolygonGeometry)
                 self.highlight_band.setColor(QColor(234, 179, 8, 120))
                 self.highlight_band.setWidth(3)
                 

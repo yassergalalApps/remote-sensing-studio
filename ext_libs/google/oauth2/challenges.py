@@ -100,7 +100,7 @@ class PasswordChallenge(ReauthChallenge):
     def obtain_challenge_input(self, unused_metadata):
         passwd = get_user_password("Please enter your password:")
         if not passwd:
-            passwd = " "  # avoid the server crashing in case of no password :D
+            passwd = " "  # avoid the server crashing in case of no password :D  # nosec B105 - Empty placeholder to avoid server crash, not a real password.
         return {"credential": passwd}
 
 

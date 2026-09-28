@@ -358,10 +358,10 @@ class Request:
         self.validator_log = {}
 
         self._params = {
-            "access_token": None,
+            "access_token": None,  # nosec B105 - Dictionary key initialization, not a credential.
             "client": None,
             "client_id": None,
-            "client_secret": None,
+            "client_secret": None,  # nosec B105 - Dictionary key initialization, not a credential.
             "code": None,
             "code_challenge": None,
             "code_challenge_method": None,
@@ -369,15 +369,15 @@ class Request:
             "extra_credentials": None,
             "grant_type": None,
             "redirect_uri": None,
-            "refresh_token": None,
-            "request_token": None,
+            "refresh_token": None,  # nosec B105 - Dictionary key initialization, not a credential.
+            "request_token": None,  # nosec B105 - Dictionary key initialization, not a credential.
             "response_type": None,
             "scope": None,
             "scopes": None,
             "state": None,
-            "token": None,
+            "token": None,  # nosec B105 - Dictionary key initialization, not a credential.
             "user": None,
-            "token_type_hint": None,
+            "token_type_hint": None,  # nosec B105 - Dictionary key initialization, not a credential.
 
             # OpenID Connect
             "response_mode": None,
@@ -387,7 +387,7 @@ class Request:
             "claims": None,
             "max_age": None,
             "ui_locales": None,
-            "id_token_hint": None,
+            "id_token_hint": None,  # nosec B105 - Dictionary key initialization, not a credential.
             "login_hint": None,
             "acr_values": None
         }

@@ -120,7 +120,7 @@ class MdsMtlsAdapter(HTTPAdapter):
         self.ssl_context = ssl.create_default_context()
         self.ssl_context.load_verify_locations(cafile=mds_mtls_config.ca_cert_path)
         self.ssl_context.load_cert_chain(
-            certfile=mds_mtls_config.client_combined_cert_path, password=""
+            certfile=mds_mtls_config.client_combined_cert_path, password=""  # nosec B106 - Empty default password for cert, not a credential.
         )
         self._fallback_adapter = HTTPAdapter()
         super(MdsMtlsAdapter, self).__init__(*args, **kwargs)

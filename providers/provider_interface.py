@@ -1,5 +1,8 @@
 import abc
-from typing import Dict, Any, List
+from typing import TYPE_CHECKING, Dict, Any, List
+
+if TYPE_CHECKING:
+    from ..models.analysis_context import AnalysisContext
 
 class ProviderInterface(abc.ABC):
     """

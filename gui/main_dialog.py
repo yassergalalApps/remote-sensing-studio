@@ -41,13 +41,15 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T4", "uic.loadUi starts")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:44] Suppressed exception: {e}")
                 pass
             uic.loadUi(UI_PATH, self)
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T4_end", "uic.loadUi ends")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:50] Suppressed exception: {e}")
                 pass
             
             # Restore standard window flags to ensure minimize/maximize buttons, 
@@ -104,7 +106,8 @@ class MainDialog(QDialog):
                         if line.startswith("version="):
                             version = line.strip().split("=")[1]
                             break
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:107] Suppressed exception: {e}")
                 pass
             if hasattr(self, 'lblProjectInfo'):
                 self.lblProjectInfo.setText(f'<b>PROJECT INFORMATION</b><br/>Developer: Yasser Galal<br/>Version: {version}')
@@ -191,7 +194,8 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T6", "__init__ ends")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:194] Suppressed exception: {e}")
                 pass
                 
         except Exception as e:
@@ -203,20 +207,22 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T8", "_deferred_heavy_init begins")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:206] Suppressed exception: {e}")
                 pass
                 
-            from ..services.analysis_engine import AnalysisEngine
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T5", "AnalysisEngine.get_instance starts")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:213] Suppressed exception: {e}")
                 pass
             self.analysis_engine = AnalysisEngine.get_instance()
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T5_end", "AnalysisEngine.get_instance ends")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:219] Suppressed exception: {e}")
                 pass
             self.logger.info("Deferred heavy initialization completed.")
             
@@ -391,7 +397,8 @@ class MainDialog(QDialog):
         try:
             from ..utils.timing_profiler import TimingProfiler
             TimingProfiler.get_instance().record("T7", "apply_provider_state begins")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:394] Suppressed exception: {e}")
             pass
         """
         Applies the current provider state as the single source of truth.
@@ -447,7 +454,8 @@ class MainDialog(QDialog):
         try:
             from ..utils.timing_profiler import TimingProfiler
             TimingProfiler.get_instance().record("T7_end", "apply_provider_state ends")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:450] Suppressed exception: {e}")
             pass
 
     def on_source_changed(self, selected: str):
@@ -457,7 +465,8 @@ class MainDialog(QDialog):
                 try:
                     from qgis.core import Qgis
                     self.iface.messageBar().pushMessage("Earth Engine", "GEE must be connected before it can be used.", level=Qgis.MessageLevel.Warning, duration=5)
-                except Exception:
+                except Exception as e:
+                    self.logger.debug(f"[gui/main_dialog.py:460] Suppressed exception: {e}")
                     pass
             self.connection_service.set_current_provider("Google Earth Engine")
         else:
@@ -502,7 +511,8 @@ class MainDialog(QDialog):
         try:
             from ..utils.timing_profiler import TimingProfiler
             TimingProfiler.get_instance().record("WS_SWITCH", f"load_workspace START: {workspace_id}")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:505] Suppressed exception: {e}")
             pass
         # Suppress repaints to prevent white/gray flashes during heavy layout and styling operations
         self.setUpdatesEnabled(False)
@@ -542,7 +552,8 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("WS_SWITCH", "stylesheet/layout work begins")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:545] Suppressed exception: {e}")
                 pass
             # Global Dynamic Tab Style Injection
             if hasattr(self, 'tabWidget'):
@@ -556,7 +567,8 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("WS_SWITCH", "load_workspace END")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:559] Suppressed exception: {e}")
                 pass
             self.setUpdatesEnabled(True)
             
@@ -602,7 +614,10 @@ class MainDialog(QDialog):
             elif not indices:
                 self.lblDashDetails.setText('Analysis tools will automatically appear here as they are implemented.')
             else:
-                self.lblDashDetails.setText(f'Select an analysis tool from the {display_name} suite.')
+                # This is a Qt QLabel string, not a SQL query; Bandit's B608 keyword
+                # regex fires on the English word "Select". No SQL/DB layer exists in
+                # this file. nosec B608
+                self.lblDashDetails.setText(f'Select an analysis tool from the {display_name} suite.')  # nosec B608
             
         # 4. Rebuild Quick Start Buttons
         print(f"\nEntering populate_quick_start() - workspace: {workspace_id}")
@@ -643,7 +658,8 @@ class MainDialog(QDialog):
                     try:
                         from ..utils.timing_profiler import TimingProfiler
                         TimingProfiler.get_instance().record("WS_SWITCH", "old widget removal begins")
-                    except Exception:
+                    except Exception as e:
+                        self.logger.debug(f"[gui/main_dialog.py:646] Suppressed exception: {e}")
                         pass
                     # Clear existing dynamic buttons from grid layout
                     while self.quick_start_grid.count() > 0:
@@ -659,7 +675,8 @@ class MainDialog(QDialog):
                     try:
                         from ..utils.timing_profiler import TimingProfiler
                         TimingProfiler.get_instance().record("WS_SWITCH", "new widget construction begins")
-                    except Exception:
+                    except Exception as e:
+                        self.logger.debug(f"[gui/main_dialog.py:662] Suppressed exception: {e}")
                         pass
                     print("Rebuilding buttons from metadata...")
                     # Rebuild buttons based strictly on metadata
@@ -728,7 +745,9 @@ class MainDialog(QDialog):
                             btn_scene.setCursor(Qt.CursorShape.PointingHandCursor)
                             
                             try: btn_scene.clicked.disconnect()
-                            except: pass
+                            except Exception as e:
+                                self.logger.debug(f"[gui/main_dialog.py:731] Suppressed exception: {e}")
+                                pass
                             btn_scene.clicked.connect(lambda checked=False: self.open_analysis_wizard("download_scene"))
                             
                             app_blue = "#2563EB"
@@ -774,7 +793,8 @@ class MainDialog(QDialog):
         try:
             from ..utils.timing_profiler import TimingProfiler
             TimingProfiler.get_instance().record("T12", "refresh_header called")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:777] Suppressed exception: {e}")
             pass
         """Update header UI with live data from ConnectionService and QgsProject."""
         try:
@@ -1054,6 +1074,7 @@ class MainDialog(QDialog):
             project.readProject.connect(self.update_project_info)
             project.projectSaved.connect(self.update_project_info)
         except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:1056] Suppressed exception: {e}")
             pass
             
     def update_project_info(self, *args, **kwargs):
@@ -1064,7 +1085,8 @@ class MainDialog(QDialog):
                 if not title:
                     title = "Untitled Project"
                 self.lblCurrentProject.setText(f'<b style="color: #FFFFFF;">{title}</b>')
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:1067] Suppressed exception: {e}")
             pass
 
     def populate_layers(self, *args, **kwargs):
@@ -1079,12 +1101,13 @@ class MainDialog(QDialog):
             layers = project.mapLayers().values()
             
             for layer in layers:
-                if isinstance(layer, QgsVectorLayer) and layer.geometryType() == QgsWkbTypes.PolygonGeometry:
+                if isinstance(layer, QgsVectorLayer) and layer.geometryType() == QgsWkbTypes.GeometryType.PolygonGeometry:
                     self.cmbAOI.addItem(layer.name(), layer.id())
                     
             self.cmbAOI.blockSignals(False)
             self.on_aoi_changed()
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:1087] Suppressed exception: {e}")
             pass
             
     def on_aoi_changed(self):
@@ -1113,7 +1136,8 @@ class MainDialog(QDialog):
                 self.lblLayerInfo.setText(info_text)
             else:
                 self.lblLayerInfo.setText("Layer not found.")
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:1116] Suppressed exception: {e}")
             pass
 
     def setup_visualization_workspace(self):
@@ -1300,7 +1324,8 @@ class MainDialog(QDialog):
                 self.logger.error("Cannot execute set_components(): one or more required inspection components are missing or None!")
             try:
                 QgsProject.instance().layersRemoved.connect(self._on_project_layers_removed)
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:1303] Suppressed exception: {e}")
                 pass
             
             # Try to restore session state
@@ -1902,8 +1927,8 @@ class MainDialog(QDialog):
             self.logger.warning("Cannot toggle inspector: pixel_inspector_session is not initialized.")
             return
             
-        def is_valid_raster(l: Any) -> bool:
-            return l is not None and getattr(l, "isValid", lambda: False)() and ("Raster" in type(l).__name__ or hasattr(l, "rasterUnitsPerPixelX") or hasattr(l, "bandCount"))
+        def is_valid_raster(layer: Any) -> bool:
+            return layer is not None and getattr(layer, "isValid", lambda: False)() and ("Raster" in type(layer).__name__ or hasattr(layer, "rasterUnitsPerPixelX") or hasattr(layer, "bandCount"))
 
         if checked:
             target_layer = getattr(self, 'current_layer', None)
@@ -1913,12 +1938,13 @@ class MainDialog(QDialog):
                     self.current_layer = target_layer
                 elif QgsProject and hasattr(QgsProject, "instance"):
                     try:
-                        for l in QgsProject.instance().mapLayers().values():
-                            if is_valid_raster(l):
-                                target_layer = l
+                        for layer in QgsProject.instance().mapLayers().values():
+                            if is_valid_raster(layer):
+                                target_layer = layer
                                 self.current_layer = target_layer
                                 break
-                    except Exception:
+                    except Exception as e:
+                        self.logger.debug(f"[gui/main_dialog.py:1921] Suppressed exception: {e}")
                         pass
 
             if is_valid_raster(target_layer):
@@ -1929,11 +1955,15 @@ class MainDialog(QDialog):
                     self.btnInspect.blockSignals(False)
                     if self.iface and hasattr(self.iface, 'messageBar') and self.iface.messageBar():
                         try: self.iface.messageBar().pushMessage("Pixel Inspector", "Failed to activate map tool in QGIS canvas.", level=getattr(Qgis, "Warning", getattr(Qgis.MessageLevel, "Warning", 1)), duration=4)
-                        except Exception: pass
+                        except Exception as e:
+                            self.logger.debug(f"[gui/main_dialog.py:1932] Suppressed exception: {e}")
+                            pass
                 else:
                     if self.iface and hasattr(self.iface, 'messageBar') and self.iface.messageBar():
                         try: self.iface.messageBar().pushMessage("Pixel Inspector", f"Active on layer '{getattr(target_layer, 'name', lambda: 'Raster')()}'! Click on any point on the map canvas to inspect.", level=getattr(Qgis, "Info", getattr(Qgis.MessageLevel, "Info", 0)), duration=5)
-                        except Exception: pass
+                        except Exception as e:
+                            self.logger.debug(f"[gui/main_dialog.py:1936] Suppressed exception: {e}")
+                            pass
             else:
                 self.logger.warning("No active raster layer available for pixel inspection.")
                 self.btnInspect.blockSignals(True)
@@ -1941,12 +1971,16 @@ class MainDialog(QDialog):
                 self.btnInspect.blockSignals(False)
                 if self.iface and hasattr(self.iface, 'messageBar') and self.iface.messageBar():
                     try: self.iface.messageBar().pushMessage("Pixel Inspector", "Please select or generate a raster layer in QGIS before toggling Pixel Inspector.", level=getattr(Qgis, "Warning", getattr(Qgis.MessageLevel, "Warning", 1)), duration=5)
-                    except Exception: pass
+                    except Exception as e:
+                        self.logger.debug(f"[gui/main_dialog.py:1944] Suppressed exception: {e}")
+                        pass
         else:
             self.deactivate_pixel_inspector()
             if self.iface and hasattr(self.iface, 'messageBar') and self.iface.messageBar():
                 try: self.iface.messageBar().pushMessage("Pixel Inspector", "Deactivated.", level=getattr(Qgis, "Info", getattr(Qgis.MessageLevel, "Info", 0)), duration=2)
-                except Exception: pass
+                except Exception as e:
+                    self.logger.debug(f"[gui/main_dialog.py:1949] Suppressed exception: {e}")
+                    pass
 
     def on_pixel_inspected(self, data):
         """Routes pixel inspection events directly to the authoritative PixelInspectorSession controller."""
@@ -1982,7 +2016,8 @@ class MainDialog(QDialog):
             try:
                 from ..utils.timing_profiler import TimingProfiler
                 TimingProfiler.get_instance().record("T11", "First post-show paint (QTimer 0)")
-            except Exception:
+            except Exception as e:
+                self.logger.debug(f"[gui/main_dialog.py:1985] Suppressed exception: {e}")
                 pass
         QTimer.singleShot(0, on_paint_done)
 
@@ -1990,7 +2025,8 @@ class MainDialog(QDialog):
         """Handles window close attempts (titlebar X button) without disrupting active map inspection tools."""
         try:
             self.save_session_state()
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:1993] Suppressed exception: {e}")
             pass
         if hasattr(event, "accept"):
             event.accept()
@@ -2090,7 +2126,8 @@ class MainDialog(QDialog):
         """Handles dialog rejection to save state and dismiss UI without disrupting active map inspection tools."""
         try:
             self.save_session_state()
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"[gui/main_dialog.py:2093] Suppressed exception: {e}")
             pass
         super().reject()
 

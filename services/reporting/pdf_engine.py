@@ -17,15 +17,8 @@ from .renderers import HistogramExporter, StatisticsRenderer, MetadataRenderer
 from .templates import TemplateEngine, ReportTemplate, DefaultTemplate
 from ..map_exporter import MapExporter
 
-try:
-    from PyQt6.QtCore import QSizeF, QRectF, Qt, QMarginsF
-    from PyQt6.QtGui import QColor, QFont, QImage, QPainter, QPdfWriter, QTextDocument, QPageSize, QPageLayout, QPen
-except ImportError:
-    try:
-        from PyQt5.QtCore import QSizeF, QRectF, Qt, QMarginsF
-        from PyQt5.QtGui import QColor, QFont, QImage, QPainter, QPdfWriter, QTextDocument, QPageSize, QPageLayout, QPen
-    except ImportError:
-        pass
+from qgis.PyQt.QtCore import QSizeF, QRectF, Qt, QMarginsF
+from qgis.PyQt.QtGui import QColor, QFont, QImage, QPainter, QPdfWriter, QTextDocument, QPageSize, QPageLayout, QPen
 
 
 @dataclass

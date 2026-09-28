@@ -4,7 +4,7 @@ qgisMinimumVersion=4.0
 qgisMaximumVersion=4.99
 description=A professional plugin for remote sensing analysis supporting GEE, indices calculation, QA, and reporting.
 about=This plugin provides enterprise-level tools for remote sensing tasks including Landsat, Sentinel-2, MODIS data analysis, composite methods, and cloud filtering. Earth Engine-based analysis features require a Google Earth Engine-enabled Google account, OAuth authentication, and an active internet connection.
-version=1.0.0
+version=1.0.7
 author=Yasser Galal
 email=228157474+yassergalalApps@users.noreply.github.com
 homepage=https://github.com/yassergalalApps/remote-sensing-studio#readme
@@ -14,3 +14,8 @@ category=Raster
 tags=remote sensing, GEE, indices, landsat, sentinel, modis
 hasProcessingProvider=False
 license=GNU General Public License v2.0 or later (GPLv2+)
+changelog=[1.0.7]
+    Security and compatibility update:
+    - Added targeted Bandit suppressions with justifications for confirmed false-positive B105/B106/B107 findings in bundled third-party OAuth/Google authentication libraries.
+    - Preserved functionality and dependency versions.
+    - Updated security-scan configuration for known third-party false positives.

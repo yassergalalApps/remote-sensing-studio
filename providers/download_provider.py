@@ -38,9 +38,13 @@ class LegacyDownloadProvider(DownloadProvider):
         )
         
         url = final_img.getDownloadURL(params)
-        
+
+        # URL is issued by GEE's own getDownloadURL() API response, not external
+        # user input; scheme check is defense-in-depth. nosec B310
+        if not url.startswith(("http://", "https://")):
+            raise ValueError(f"Refusing to open non-http(s) URL: {url!r}")
         req = urllib.request.Request(url)
-        with urllib.request.urlopen(req, timeout=timeout) as response:
+        with urllib.request.urlopen(req, timeout=timeout) as response:  # nosec B310
             data = response.read()
             with open(file_path, 'wb') as f:
                 f.write(data)

@@ -77,20 +77,17 @@ class RendererManager:
         display_range = symbology_template.get("Display Range", [0, 1])
         
         # update classification mode
-        try:
-            if mode == "Continuous":
-                color_ramp.setColorRampType(QgsColorRampShader.Interpolated)
-                color_ramp.setClassificationMode(QgsColorRampShader.Continuous)
-            elif mode == "Equal Interval" or mode == "Natural Breaks (Jenks)":
-                color_ramp.setColorRampType(QgsColorRampShader.Discrete)
-                color_ramp.setClassificationMode(QgsColorRampShader.EqualInterval)
-            elif mode == "Exact":
-                color_ramp.setColorRampType(QgsColorRampShader.Exact)
-            else:
-                color_ramp.setColorRampType(QgsColorRampShader.Interpolated)
-                color_ramp.setClassificationMode(QgsColorRampShader.Continuous)
-        except AttributeError:
-            pass # fallback to Qt6 enumerations if needed
+        if mode == "Continuous":
+            color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
+            color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
+        elif mode == "Equal Interval" or mode == "Natural Breaks (Jenks)":
+            color_ramp.setColorRampType(QgsColorRampShader.Type.Discrete)
+            color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.EqualInterval)
+        elif mode == "Exact":
+            color_ramp.setColorRampType(QgsColorRampShader.Type.Exact)
+        else:
+            color_ramp.setColorRampType(QgsColorRampShader.Type.Interpolated)
+            color_ramp.setClassificationMode(QgsColorRampShader.ClassificationMode.Continuous)
 
         color_ramp.setMinimumValue(display_range[0])
         color_ramp.setMaximumValue(display_range[1])
@@ -129,7 +126,8 @@ class RendererManager:
                 node = root.findLayer(layer.id())
                 if node:
                     qgis.utils.iface.layerTreeView().layerTreeModel().refreshLayerLegend(node)
-            except Exception:
+            except Exception as e:
+                logger.debug(f"[visualization/renderer_manager.py:132] Suppressed exception: {e}")
                 pass
                 
         logger.info(f"RendererManager: Instantly updated existing renderer for layer {layer.name()} using {mode} classification.")
