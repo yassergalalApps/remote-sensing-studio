@@ -100,7 +100,7 @@ class _BaseExponentialBackoff:
 
     def _calculate_jitter(self):
         jitter_variance = self._current_wait_in_seconds * self._randomization_factor
-        jitter = random.uniform(
+        jitter = random.uniform(  # nosec B311 - upstream retry jitter, non-crypto
             self._current_wait_in_seconds - jitter_variance,
             self._current_wait_in_seconds + jitter_variance,
         )

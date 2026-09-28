@@ -124,7 +124,7 @@ class SecurityKeyChallenge(ReauthChallenge):
             if webauthn_handler is not None:
                 sys.stderr.write("Please insert and touch your security key\n")
                 return self._obtain_challenge_input_webauthn(metadata, webauthn_handler)
-        except Exception:
+        except Exception:  # nosec B110 - upstream graceful fallback
             # Attempt pyu2f if exception in webauthn flow
             pass
 

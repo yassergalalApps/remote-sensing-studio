@@ -38,7 +38,7 @@ except ImportError:  # pragma: NO COVER
 import json
 import os
 import shlex
-import subprocess
+import subprocess  # nosec B404 - official google.auth lib pluggable auth
 import sys
 import time
 
@@ -184,7 +184,7 @@ class Credentials(external_account.Credentials):
                     self._credential_source_executable_output_file, encoding="utf-8"
                 ) as output_file:
                     response = json.load(output_file)
-            except Exception:
+            except Exception:  # nosec B110 - upstream graceful fallback
                 pass
             else:
                 try:
@@ -216,7 +216,7 @@ class Credentials(external_account.Credentials):
         exe_stdout = sys.stdout if self.interactive else subprocess.PIPE
         exe_stderr = sys.stdout if self.interactive else subprocess.STDOUT
 
-        result = subprocess.run(
+        result = subprocess.run(  # nosec B603 - official google.auth lib pluggable auth
             shlex.split(self._credential_source_executable_command),
             timeout=exe_timeout,
             stdin=exe_stdin,
@@ -264,7 +264,7 @@ class Credentials(external_account.Credentials):
         env["GOOGLE_EXTERNAL_ACCOUNT_REVOKE"] = "1"
 
         # Run executable
-        result = subprocess.run(
+        result = subprocess.run(  # nosec B603 - official google.auth lib pluggable auth
             shlex.split(self._credential_source_executable_command),
             timeout=self._credential_source_executable_interactive_timeout_millis
             / 1000,

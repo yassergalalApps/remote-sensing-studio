@@ -20,7 +20,7 @@ import logging
 import os
 from os import environ, getenv, path
 import re
-import subprocess
+import subprocess  # nosec B404 - official google.auth lib invoking helper
 import sys
 import tempfile
 from typing import cast, Generator, List, Optional, Tuple, Union
@@ -285,8 +285,8 @@ def _tempfile_cert_key_paths(
     """
     # Prioritize RAM-backed /dev/shm to avoid writing secrets to physical storage.
     tmp_dir = (
-        "/dev/shm"
-        if os.path.isdir("/dev/shm") and os.access("/dev/shm", os.W_OK)
+        "/dev/shm"  # nosec B108 - safe checking of standard POSIX in-memory temp path in upstream google.auth
+        if os.path.isdir("/dev/shm") and os.access("/dev/shm", os.W_OK)  # nosec B108 - safe checking of standard POSIX in-memory temp path in upstream google.auth
         else None
     )
     cleanup_files: List[Optional[str]] = [None, None]
@@ -315,7 +315,7 @@ def _tempfile_cert_key_paths(
         try:
             if key_cleanup_path:
                 _secure_wipe_and_remove(key_cleanup_path)
-        except Exception:
+        except Exception:  # nosec B110 - upstream graceful fallback
             pass
         finally:
             if cert_cleanup_path:
@@ -574,7 +574,7 @@ def _run_cert_provider_command(command, expect_encrypted_key=False):
             the cert provider command or generating cert, key and passphrase.
     """
     try:
-        process = subprocess.Popen(
+        process = subprocess.Popen(  # nosec B603 - official google.auth lib invoking helper
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
         stdout, stderr = process.communicate()

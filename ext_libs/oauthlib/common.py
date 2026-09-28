@@ -170,7 +170,7 @@ def generate_nonce():
     .. _`section 3.2.1`: https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-01#section-3.2.1
     .. _`section 3.3`: https://tools.ietf.org/html/rfc5849#section-3.3
     """
-    return str(str(randbits(64)) + generate_timestamp())
+    return str(str(randbits(64)) + generate_timestamp())  # nosec B311 - upstream OAuth1 nonce generation
 
 
 def generate_timestamp():

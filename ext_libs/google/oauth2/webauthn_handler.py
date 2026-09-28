@@ -1,7 +1,7 @@
 import abc
 import os
 import struct
-import subprocess
+import subprocess  # nosec B404 - official google.auth lib webauthn
 
 from google.auth import exceptions
 from google.oauth2.webauthn_types import GetRequest, GetResponse
@@ -57,7 +57,7 @@ class PluginHandler(WebAuthnHandler):
         request = length_bytes_le + input_json.encode()
 
         # Call plugin
-        process_result = subprocess.run([cmd], input=request, capture_output=True)
+        process_result = subprocess.run([cmd], input=request, capture_output=True)  # nosec B603 - official google.auth lib webauthn
 
         if process_result.returncode != 0:
             stdout_bytes = process_result.stdout

@@ -15,7 +15,7 @@
 """Helpers for reading the Google Cloud SDK's configuration."""
 
 import os
-import subprocess
+import subprocess  # nosec B404 - official google.auth lib invoking gcloud
 
 from google.auth import _helpers
 from google.auth import environment_vars
@@ -85,7 +85,7 @@ def get_application_default_credentials_path():
 def _run_subprocess_ignore_stderr(command):
     """Return subprocess.check_output with the given command and ignores stderr."""
     with open(os.devnull, "w") as devnull:
-        output = subprocess.check_output(command, stderr=devnull)
+        output = subprocess.check_output(command, stderr=devnull)  # nosec B603 - official google.auth lib invoking gcloud
     return output
 
 
@@ -143,7 +143,7 @@ def get_auth_access_token(account=None):
         else:
             command = (command,) + _CLOUD_SDK_USER_ACCESS_TOKEN_COMMAND
 
-        access_token = subprocess.check_output(command, stderr=subprocess.STDOUT)
+        access_token = subprocess.check_output(command, stderr=subprocess.STDOUT)  # nosec B603 - official google.auth lib invoking gcloud
         # remove the trailing "\n"
         return access_token.decode("utf-8").strip()
     except (subprocess.CalledProcessError, OSError, IOError) as caught_exc:

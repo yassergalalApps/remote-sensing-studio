@@ -207,7 +207,7 @@ class AsyncAuthorizedSession:
 
                             try:
                                 await old_auth_request.close()
-                            except Exception:
+                            except Exception:  # nosec B110 - upstream graceful fallback
                                 # Suppress so it doesn't abort the mTLS configuration
                                 pass
                         else:
@@ -281,7 +281,7 @@ class AsyncAuthorizedSession:
         if self._mtls_init_task:
             try:
                 await self._mtls_init_task
-            except Exception:
+            except Exception:  # nosec B110 - upstream graceful fallback
                 # Suppress all exceptions from the background mTLS initialization task,
                 # allowing the request to fail naturally elsewhere.
                 pass
